@@ -1,10 +1,10 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
-import { DeepPartial, FindManyOptions, FindOneOptions, FindOptionsWhere, ObjectLiteral, Repository } from "typeorm";
+import type { DeepPartial, FindManyOptions, FindOptionsWhere, ObjectLiteral, Repository } from "typeorm";
 
-export class CRUD<Entity extends ObjectLiteral> {
+export class CRUDService<Entity extends ObjectLiteral> {
   private readonly logger: Logger;
 
-  constructor(private readonly repository: Repository<Entity>, loggerContext: string = Repository.name) {
+  constructor(private readonly repository: Repository<Entity>, loggerContext: string) {
     this.logger = new Logger(loggerContext);
   }
 
@@ -29,17 +29,6 @@ export class CRUD<Entity extends ObjectLiteral> {
     }
   }
 
-  async findOne(where: FindOneOptions<Entity>): Promise<Entity> {
-    try {
-      const obj = await this.repository.findOne(where);
-      if (obj) return obj;
-    } catch (error) {
-      this.handlerError(error);
-    }
-
-    throw new NotFoundException(`Not found`);
-  }
-
   async findOneBy(where: FindOptionsWhere<Entity> | Array<FindOptionsWhere<Entity>>): Promise<Entity> {
     try {
       const obj = await this.repository.findOneBy(where);
@@ -49,6 +38,10 @@ export class CRUD<Entity extends ObjectLiteral> {
     }
 
     throw new NotFoundException(`Not found`);
+  }
+
+  async removeAll(): Promise<void> {
+    await this.repository.remove([]);
   }
 
   private handlerError(error: any, InstanceError: any = BadRequestException): void {
