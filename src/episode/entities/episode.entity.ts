@@ -18,7 +18,7 @@ export class Episode {
   @Column("text")
   episode: string;
 
-  @ManyToMany(() => Character)
+  @ManyToMany(() => Character, (character) => character.episode, { nullable: true })
   characters: Character[];
 
   @Column("text")

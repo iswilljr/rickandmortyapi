@@ -18,7 +18,7 @@ export class Location {
   @Column("text")
   dimension: string;
 
-  @ManyToMany(() => Character, (character) => character.location)
+  @ManyToMany(() => Character, (character) => character.location, { nullable: true })
   residents: Character;
 
   @Column("text")
@@ -27,9 +27,9 @@ export class Location {
   @Column("date")
   created: string;
 
-  @ManyToMany(() => Character, (character) => character.origin)
+  @ManyToMany(() => Character, (character) => character.origin, { nullable: true })
   charactersOrigin: Character[];
 
-  @ManyToMany(() => Character, (character) => character.location)
+  @ManyToMany(() => Character, (character) => character.location, { nullable: true })
   charactersLocation: Character[];
 }

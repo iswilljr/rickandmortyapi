@@ -1,6 +1,6 @@
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Character {
@@ -25,31 +25,26 @@ export class Character {
   @Column("text")
   gender: string;
 
-  @ManyToMany(() => Location, (location) => location.charactersOrigin)
+  @ManyToMany(() => Location, (location) => location.charactersOrigin, { nullable: true })
   origin: Location;
 
-  @ManyToMany(() => Location, (location) => location.charactersLocation)
+  @ManyToMany(() => Location, (location) => location.charactersLocation, { nullable: true })
   location: Location;
 
   @Column("text")
   image: string;
 
-  @ManyToMany(() => Episode, (episode) => episode.characters)
-  episode: Episode;
+  @ManyToMany(() => Episode, (episode) => episode.characters, { nullable: true })
+  episode: Episode[];
 
   @Column("text")
   url: string;
 
-  @Column("date", { nullable: true })
+  @Column("date")
   created: string;
 
   @BeforeInsert()
   beforeInsert(): void {
     this.created = new Date().toISOString();
-  }
-
-  @BeforeUpdate()
-  beforeUpdate(): void {
-    this.beforeInsert();
   }
 }
