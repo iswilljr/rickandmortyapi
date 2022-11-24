@@ -41,7 +41,13 @@ export class CRUDService<Entity extends ObjectLiteral> {
   }
 
   async removeAll(): Promise<void> {
-    await this.repository.remove([]);
+    const queryBuilder = this.repository.createQueryBuilder();
+
+    try {
+      await queryBuilder.delete().where({}).execute();
+    } catch (error) {
+      this.handlerError(error);
+    }
   }
 
   private handlerError(error: any, InstanceError: any = BadRequestException): void {

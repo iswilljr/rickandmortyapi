@@ -9,5 +9,6 @@ import { Location } from "./entities/location.entity";
   imports: [TypeOrmModule.forFeature([Location])],
   controllers: [LocationController],
   providers: [LocationService, ConfigService],
+  exports: [TypeOrmModule, LocationService],
 })
 export class LocationModule {}

@@ -8,7 +8,7 @@ export class SeedController {
 
   @Post()
   @Auth()
-  create(): string {
+  create(): Promise<string> {
     return this.seedService.seed();
   }
 }
