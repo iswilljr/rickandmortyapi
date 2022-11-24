@@ -3,6 +3,7 @@ import { Auth } from "common/decorators/auth.decorator";
 import { CharacterService } from "./character.service";
 import { CreateCharacterDto } from "./dto/create-character.dto";
 import { UpdateCharacterDto } from "./dto/update-character.dto";
+import { Character } from "./entities/character.entity";
 
 @Controller("character")
 export class CharacterController {
@@ -20,7 +21,7 @@ export class CharacterController {
 
   @Post()
   @Auth()
-  create(@Body() createCharacterDto: CreateCharacterDto): string {
+  create(@Body() createCharacterDto: CreateCharacterDto): Promise<Character> {
     return this.characterService.create(createCharacterDto);
   }
 

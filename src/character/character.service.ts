@@ -1,11 +1,18 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { CreateCharacterDto } from "./dto/create-character.dto";
 import { UpdateCharacterDto } from "./dto/update-character.dto";
+import { Character } from "./entities/character.entity";
 
 @Injectable()
 export class CharacterService {
-  create(createCharacterDto: CreateCharacterDto): string {
-    return "This action adds a new character";
+  constructor(@InjectRepository(Character) private readonly characterRepository: Repository<Character>) {}
+
+  create(createCharacterDto: CreateCharacterDto): Promise<Character> {
+    const character = this.characterRepository.create(createCharacterDto);
+
+    return this.characterRepository.save(character);
   }
 
   findAll(): string {
