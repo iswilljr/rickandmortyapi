@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
 
 export class CreateCharacterDto {
   @IsNumber()
@@ -25,21 +25,22 @@ export class CreateCharacterDto {
   @IsNotEmpty()
   gender: string;
 
-  // @IsString()
-  // @IsNotEmpty()
-  // origin: Location;
+  @IsNumber()
+  @IsPositive()
+  originId: number;
 
-  // @IsString()
-  // @IsNotEmpty()
-  // location: Location;
+  @IsNumber()
+  @IsPositive()
+  locationId: number;
 
   @IsString()
   @IsNotEmpty()
   image: string;
 
-  // @IsString()
-  // @IsNotEmpty()
-  // episode: string;
+  @IsPositive({ each: true })
+  @IsArray()
+  @ArrayNotEmpty()
+  episode: number[];
 
   @IsString()
   @IsNotEmpty()

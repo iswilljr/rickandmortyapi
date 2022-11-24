@@ -22,7 +22,7 @@ export class Location {
   dimension: string;
 
   @ManyToMany(() => Character, (character) => character.location, { nullable: true })
-  residents: Character;
+  residents: Character[];
 
   @Column("text")
   url: string;

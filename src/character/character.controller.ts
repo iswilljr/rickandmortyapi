@@ -1,26 +1,28 @@
 import { Controller, Get, Post, Body, Param, ParseIntPipe } from "@nestjs/common";
 import { Auth } from "common/decorators/auth.decorator";
+import { CharacterResponse } from "common/interfaces/character.interface";
 import { CharacterService } from "./character.service";
 import { CreateCharacterDto } from "./dto/create-character.dto";
-import { Character } from "./entities/character.entity";
 
 @Controller("character")
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Get()
-  findAll(): Promise<Character[]> {
+  findAll(): Promise<CharacterResponse[]> {
     return this.characterService.findAll();
   }
 
   @Get(":id")
-  findOne(@Param("id", ParseIntPipe) id: number): Promise<Character> {
+  findOne(@Param("id", ParseIntPipe) id: number): Promise<CharacterResponse> {
     return this.characterService.findOneBy({ id });
   }
 
   @Post()
   @Auth()
-  create(@Body() createCharacterDto: CreateCharacterDto): Promise<Character> {
+  create(
+    @Body() { locationId, originId, episode, ...createCharacterDto }: CreateCharacterDto
+  ): Promise<CharacterResponse> {
     return this.characterService.create(createCharacterDto);
   }
 }
