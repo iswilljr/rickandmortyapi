@@ -1,26 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import { CreateEpisodeDto } from "./dto/create-episode.dto";
-import { UpdateEpisodeDto } from "./dto/update-episode.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CRUDService } from "common/classes/crud.service";
+import { Episode } from "./entities/episode.entity";
 
 @Injectable()
-export class EpisodeService {
-  create(createEpisodeDto: CreateEpisodeDto): string {
-    return "This action adds a new episode";
-  }
-
-  findAll(): string {
-    return `This action returns all episode`;
-  }
-
-  findOne(id: number): string {
-    return `This action returns a #${id} episode`;
-  }
-
-  update(id: number, updateEpisodeDto: UpdateEpisodeDto): string {
-    return `This action updates a #${id} episode`;
-  }
-
-  remove(id: number): string {
-    return `This action removes a #${id} episode`;
+export class EpisodeService extends CRUDService<Episode> {
+  constructor(@InjectRepository(Episode) episodeRepository: Repository<Episode>) {
+    super(episodeRepository, "EpisodeService");
   }
 }
