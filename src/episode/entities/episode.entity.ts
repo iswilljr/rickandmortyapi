@@ -1,9 +1,12 @@
 import { Character } from "character/entities/character.entity";
-import { Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Episode {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn("uuid")
+  uuid: string;
+
+  @Column({
     type: "int",
     unique: true,
   })

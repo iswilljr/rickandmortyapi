@@ -1,10 +1,13 @@
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
-import { BeforeInsert, Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Character {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn("uuid")
+  uuid: string;
+
+  @Column({
     type: "int",
     unique: true,
   })
