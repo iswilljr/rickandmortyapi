@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from "class-validator";
+import { IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from "class-validator";
 
 export class CreateLocationDto {
   @IsNumber()
@@ -16,11 +16,6 @@ export class CreateLocationDto {
   @IsString()
   @IsNotEmpty()
   dimension: string;
-
-  @IsPositive({ each: true })
-  @IsArray()
-  @ArrayNotEmpty()
-  residents: number[];
 
   @IsString()
   @IsUrl()

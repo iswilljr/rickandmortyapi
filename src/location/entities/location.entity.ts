@@ -32,7 +32,4 @@ export class Location {
 
   @ManyToMany(() => Character, (character) => character.origin, { nullable: true })
   charactersOrigin: Character[];
-
-  @ManyToMany(() => Character, (character) => character.location, { nullable: true })
-  charactersLocation: Character[];
 }

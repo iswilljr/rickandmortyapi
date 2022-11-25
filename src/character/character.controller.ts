@@ -20,9 +20,7 @@ export class CharacterController {
 
   @Post()
   @Auth()
-  create(
-    @Body() { locationId, originId, episode, ...createCharacterDto }: CreateCharacterDto
-  ): Promise<CharacterResponse> {
-    return this.characterService.create(createCharacterDto);
+  create(@Body() createCharacterDto: CreateCharacterDto): Promise<CharacterResponse> {
+    return this.characterService.createCharacter(createCharacterDto);
   }
 }

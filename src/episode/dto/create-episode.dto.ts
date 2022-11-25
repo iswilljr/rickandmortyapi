@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsDate, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from "class-validator";
+import { IsDate, IsNotEmpty, IsNumber, IsPositive, IsString, IsUrl } from "class-validator";
 
 export class CreateEpisodeDto {
   @IsNumber()
@@ -16,12 +16,6 @@ export class CreateEpisodeDto {
   @IsString()
   @IsNotEmpty()
   episode: string;
-
-  @IsString({ each: true })
-  @IsNotEmpty({ each: true })
-  @IsArray()
-  @ArrayNotEmpty()
-  characters: string[];
 
   @IsString()
   @IsUrl()

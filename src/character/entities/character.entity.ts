@@ -31,7 +31,7 @@ export class Character {
   @ManyToMany(() => Location, (location) => location.charactersOrigin, { nullable: true })
   origin: Location;
 
-  @ManyToMany(() => Location, (location) => location.charactersLocation, { nullable: true })
+  @ManyToMany(() => Location, (location) => location.residents, { nullable: true })
   location: Location;
 
   @Column("text")
