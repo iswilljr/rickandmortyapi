@@ -14,8 +14,19 @@ export class SeedService {
   async seed(): Promise<string> {
     await this.preSeed();
 
+    await Promise.all([this.seedEpisodes(), this.seedLocations()]);
+
+    // depends on episodes and locations
+    await this.seedCharacters();
+
     return "This action adds a new seed";
   }
+
+  async seedEpisodes(): Promise<void> {}
+
+  async seedLocations(): Promise<void> {}
+
+  async seedCharacters(): Promise<void> {}
 
   private async preSeed(): Promise<void> {
     await Promise.all([
