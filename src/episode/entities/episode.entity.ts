@@ -1,5 +1,5 @@
 import { Character } from "character/entities/character.entity";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Episode {
@@ -22,6 +22,7 @@ export class Episode {
   episode: string;
 
   @ManyToMany(() => Character, (character) => character.episode, { nullable: true })
+  @JoinTable()
   characters: Character[];
 
   @Column("text")

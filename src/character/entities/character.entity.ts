@@ -1,6 +1,6 @@
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
-import { BeforeInsert, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Character {
@@ -28,10 +28,10 @@ export class Character {
   @Column("text")
   gender: string;
 
-  @ManyToMany(() => Location, (location) => location.charactersOrigin, { nullable: true })
+  @OneToMany(() => Location, (location) => location.charactersOrigin, { nullable: true })
   origin: Location;
 
-  @ManyToMany(() => Location, (location) => location.residents, { nullable: true })
+  @OneToMany(() => Location, (location) => location.residents, { nullable: true })
   location: Location;
 
   @Column("text")
