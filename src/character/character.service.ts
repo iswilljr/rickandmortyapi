@@ -42,17 +42,29 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
     const [episodeObj, originAndlocation] = await Promise.all([
       this.episodeRepository.findBy({ id: In(episode) }),
       originId === locationId
-        ? this.locationRepository.findOneBy({ id: originId })
-        : this.locationRepository.findBy({ id: In([originId, locationId]) }),
+        ? originId
+          ? this.locationRepository.findOneBy({ id: originId })
+          : Promise.resolve({})
+        : originId || locationId
+        ? this.locationRepository.findBy({ id: In([].concat(locationId || [], originId || [])) })
+        : Promise.resolve({}),
     ]);
 
     const find = (id: number): Location => (originAndlocation as Location[]).find((value) => value.id === id);
 
-    return {
+    const isArray = Array.isArray(originAndlocation);
+    const location = isArray ? find(locationId) : originAndlocation;
+    const origin = isArray ? find(originId) : originAndlocation;
+
+    const obj = {
       episode: episodeObj,
-      location: Array.isArray(originAndlocation) ? find(locationId) : originAndlocation,
-      origin: Array.isArray(originAndlocation) ? find(originId) : originAndlocation,
+      ...(locationId ? { location } : {}),
+      ...(originId ? { origin } : {}),
       ...createCharacterDto,
     };
+
+    if (!obj.location || !obj.origin) console.log(obj);
+
+    return obj;
   }
 }

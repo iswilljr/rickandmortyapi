@@ -10,7 +10,7 @@ export class EpisodeController {
 
   @Get()
   findAll(): Promise<EpisodeResponse[]> {
-    return this.episodeService.findAll();
+    return this.episodeService.findAll({ relations: { characters: true } });
   }
 
   @Get(":id")

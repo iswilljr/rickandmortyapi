@@ -1,5 +1,5 @@
 import { Character } from "character/entities/character.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Location {
@@ -21,7 +21,7 @@ export class Location {
   @Column("text")
   dimension: string;
 
-  @ManyToOne(() => Character, (character) => character.location, { nullable: true })
+  @OneToMany(() => Character, (character) => character.location, { nullable: true, onDelete: "CASCADE" })
   residents: Character[];
 
   @Column("text")
@@ -30,7 +30,6 @@ export class Location {
   @Column("date")
   created: string;
 
-  @ManyToMany(() => Character, (character) => character.origin, { nullable: true })
-  @JoinTable()
+  @OneToMany(() => Character, (character) => character.origin, { nullable: true, onDelete: "CASCADE" })
   charactersOrigin: Character[];
 }

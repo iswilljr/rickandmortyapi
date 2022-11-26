@@ -10,7 +10,7 @@ export class LocationController {
 
   @Get()
   findAll(): Promise<LocationResponse[]> {
-    return this.locationService.findAll();
+    return this.locationService.findAll({ relations: { residents: true } });
   }
 
   @Get(":id")

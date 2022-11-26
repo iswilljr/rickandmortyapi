@@ -21,7 +21,7 @@ export class Episode {
   @Column("text")
   episode: string;
 
-  @ManyToMany(() => Character, (character) => character.episode, { nullable: true })
+  @ManyToMany(() => Character, (character) => character.episode, { nullable: true, onDelete: "CASCADE" })
   @JoinTable()
   characters: Character[];
 
