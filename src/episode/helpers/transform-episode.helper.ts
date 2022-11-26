@@ -5,7 +5,7 @@ export function transformEpisode(character: Episode): EpisodeResponse {
   const { characters, uuid, ...characterObj } = character;
 
   return {
-    characters: characters.map((character) => character.url),
+    characters: characters?.map((character) => character.url),
     ...characterObj,
   };
 }

@@ -5,7 +5,7 @@ export function transformLocation(character: Location): LocationResponse {
   const { residents, charactersOrigin, uuid, ...characterObj } = character;
 
   return {
-    residents: residents.map((resident) => resident.url),
+    residents: residents?.map((resident) => resident.url),
     ...characterObj,
   };
 }
