@@ -5,7 +5,7 @@ import { CharacterResponse } from "common/interfaces/character.interface";
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
 import { DeepPartial, In, Repository } from "typeorm";
-import { CreateCharacterDto } from "./dto/create-character.dto";
+import { CreateCharacterDto } from "../seed/interfaces/create-character.inteface";
 import { Character } from "./entities/character.entity";
 import { transformCharacter } from "./helpers/transform-character.helper";
 
@@ -17,13 +17,6 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
     @InjectRepository(Location) private readonly locationRepository: Repository<Location>
   ) {
     super(characterRepository, { loggerName: "CharacterService", transformObj: transformCharacter });
-  }
-
-  async createCharacter(create: CreateCharacterDto): Promise<CharacterResponse> {
-    const character = await this.getCharacter(create);
-
-    // eslint-disable-next-line @typescript-eslint/return-await
-    return this.create(character);
   }
 
   async createCharacters(create: CreateCharacterDto[]): Promise<CharacterResponse[]> {
@@ -41,30 +34,23 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
   }: CreateCharacterDto): Promise<DeepPartial<Character>> {
     const [episodeObj, originAndlocation] = await Promise.all([
       this.episodeRepository.findBy({ id: In(episode) }),
-      originId === locationId
-        ? originId
-          ? this.locationRepository.findOneBy({ id: originId })
-          : Promise.resolve({})
-        : originId || locationId
-        ? this.locationRepository.findBy({ id: In([].concat(locationId || [], originId || [])) })
-        : Promise.resolve({}),
+      locationId || originId
+        ? this.locationRepository.findBy(
+            [].concat(locationId ? [{ id: locationId }] : [], originId ? [{ id: originId }] : [])
+          )
+        : undefined,
     ]);
 
-    const find = (id: number): Location => (originAndlocation as Location[]).find((value) => value.id === id);
+    const find = (id: number): Location | undefined => originAndlocation?.find((value) => value.id === id);
 
-    const isArray = Array.isArray(originAndlocation);
-    const location = isArray ? find(locationId) : originAndlocation;
-    const origin = isArray ? find(originId) : originAndlocation;
+    const location = find(locationId);
+    const origin = find(originId);
 
-    const obj = {
-      episode: episodeObj,
-      ...(locationId ? { location } : {}),
-      ...(originId ? { origin } : {}),
+    return {
       ...createCharacterDto,
+      episode: episodeObj,
+      location: locationId && location ? location : undefined,
+      origin: originId && origin ? origin : undefined,
     };
-
-    if (!obj.location || !obj.origin) console.log(obj);
-
-    return obj;
   }
 }

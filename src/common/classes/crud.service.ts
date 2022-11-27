@@ -12,15 +12,11 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     this.logger = new Logger(options.loggerName);
   }
 
-  async create(
-    create: DeepPartial<Entity> | Array<DeepPartial<Entity>>
-  ): Promise<ReturnType<typeof this.options.transformObj>> {
+  async create(entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>): Promise<void> {
     try {
-      const obj = this.repository.create(create as DeepPartial<Entity>);
+      const obj = this.repository.create(entityLike as DeepPartial<Entity>);
 
       await this.repository.save(obj);
-
-      return this.options.transformObj(obj);
     } catch (error) {
       this.handlerError(error);
     }
