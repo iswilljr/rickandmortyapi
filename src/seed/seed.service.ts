@@ -3,8 +3,7 @@ import { CharacterService } from "character/character.service";
 import { EpisodeService } from "episode/episode.service";
 import { LocationService } from "location/location.service";
 import { CreateCharacterDto } from "seed/interfaces/create-character.inteface";
-import type { CharacterResponse, EpisodeResponse, LocationResponse } from "common/interfaces";
-import type { PaginationResponse } from "./interfaces/response.interface";
+import type { CharacterResponse, EpisodeResponse, LocationResponse, PaginationResponse } from "../common/interfaces";
 
 @Injectable()
 export class SeedService {
