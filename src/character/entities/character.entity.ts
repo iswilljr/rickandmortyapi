@@ -40,9 +40,6 @@ export class Character {
   @ManyToMany(() => Episode, (episode) => episode.characters, { nullable: true, onDelete: "CASCADE" })
   episode: Episode[];
 
-  @Column("text")
-  url: string;
-
   @Column("timestamp")
   created: string;
 

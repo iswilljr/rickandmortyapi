@@ -25,9 +25,6 @@ export class Episode {
   @JoinTable()
   characters: Character[];
 
-  @Column("text")
-  url: string;
-
   @Column("timestamp")
   created: string;
 }

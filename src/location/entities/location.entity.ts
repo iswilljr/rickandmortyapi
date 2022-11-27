@@ -24,9 +24,6 @@ export class Location {
   @OneToMany(() => Character, (character) => character.location, { nullable: true, onDelete: "CASCADE" })
   residents: Character[];
 
-  @Column("text")
-  url: string;
-
   @Column("timestamp")
   created: string;
 
