@@ -53,7 +53,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
             count,
             pages,
             next: nPage < pages ? (nPage + 1).toString() : null,
-            prev: nPage > 0 && nPage ? nPage.toString() : null,
+            prev: page > 0 ? nPage.toString() : null,
           },
           results: objs.map(this.options.transformObj),
         };
