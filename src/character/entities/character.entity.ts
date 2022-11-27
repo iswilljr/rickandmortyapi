@@ -43,7 +43,7 @@ export class Character {
   @Column("text")
   url: string;
 
-  @Column("date")
+  @Column("timestamp")
   created: string;
 
   @BeforeInsert()

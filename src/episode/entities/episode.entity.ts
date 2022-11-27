@@ -15,7 +15,7 @@ export class Episode {
   @Column("text")
   name: string;
 
-  @Column("date")
+  @Column("text")
   air_date: string;
 
   @Column("text")
@@ -28,6 +28,6 @@ export class Episode {
   @Column("text")
   url: string;
 
-  @Column("date")
+  @Column("timestamp")
   created: string;
 }

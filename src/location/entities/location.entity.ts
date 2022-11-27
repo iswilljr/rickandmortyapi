@@ -27,7 +27,7 @@ export class Location {
   @Column("text")
   url: string;
 
-  @Column("date")
+  @Column("timestamp")
   created: string;
 
   @OneToMany(() => Character, (character) => character.origin, { nullable: true, onDelete: "CASCADE" })
