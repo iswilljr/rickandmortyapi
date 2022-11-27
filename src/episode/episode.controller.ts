@@ -1,7 +1,5 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from "@nestjs/common";
-import { Auth } from "common/decorators/auth.decorator";
+import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
 import { EpisodeService } from "./episode.service";
-import { CreateEpisodeDto } from "./dto/create-episode.dto";
 import { EpisodeResponse } from "common/interfaces/episode.interface";
 
 @Controller("episode")
@@ -16,11 +14,5 @@ export class EpisodeController {
   @Get(":id")
   findOne(@Param("id", ParseIntPipe) id: number): Promise<EpisodeResponse> {
     return this.episodeService.findOneBy({ id });
-  }
-
-  @Post()
-  @Auth()
-  create(@Body() createEpisodeDto: CreateEpisodeDto): Promise<EpisodeResponse> {
-    return this.episodeService.create(createEpisodeDto);
   }
 }
