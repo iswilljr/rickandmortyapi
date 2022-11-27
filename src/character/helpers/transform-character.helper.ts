@@ -5,9 +5,9 @@ export function transformCharacter(character: Character): CharacterResponse {
   const { episode, location, origin, uuid, ...characterObj } = character;
 
   return {
-    episode: episode?.map?.((episode) => episode.url),
+    ...characterObj,
     location: location ? { name: location.name, url: location.url } : undefined,
     origin: origin ? { name: origin.name, url: origin.url } : undefined,
-    ...characterObj,
+    episode: episode?.map?.((episode) => episode.url),
   };
 }
