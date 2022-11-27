@@ -1,6 +1,6 @@
+import { getUrl } from "common/helpers/get-url.helper";
 import type { Location } from "location/entities/location.entity";
 import type { LocationResponse } from "common/interfaces/location.interface";
-import { getUrl } from "common/helpers/get-url.helper";
 
 export function transformLocation(location: Location): LocationResponse {
   const { residents, charactersOrigin, uuid, ...locationObj } = location;

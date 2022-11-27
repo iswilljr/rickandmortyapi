@@ -1,10 +1,10 @@
 import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { LocationService } from "./location.service";
-import { LocationResponse } from "common/interfaces/location.interface";
-import { FindOptionsRelations } from "typeorm";
-import { Location } from "./entities/location.entity";
-import { PaginationResponse } from "common/interfaces";
 import { Page } from "common/decorators/page.decorator";
+import { LocationService } from "./location.service";
+import type { FindOptionsRelations } from "typeorm";
+import type { LocationResponse } from "common/interfaces/location.interface";
+import type { PaginationResponse } from "common/interfaces";
+import type { Location } from "./entities/location.entity";
 
 @Controller("location")
 export class LocationController {

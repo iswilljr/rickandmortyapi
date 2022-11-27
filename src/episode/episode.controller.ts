@@ -1,10 +1,10 @@
 import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { EpisodeService } from "./episode.service";
-import { EpisodeResponse } from "common/interfaces/episode.interface";
-import type { FindOptionsRelations } from "typeorm";
-import type { Episode } from "./entities/episode.entity";
-import { PaginationResponse } from "common/interfaces";
 import { Page } from "common/decorators/page.decorator";
+import { EpisodeService } from "./episode.service";
+import type { FindOptionsRelations } from "typeorm";
+import type { EpisodeResponse } from "common/interfaces/episode.interface";
+import type { PaginationResponse } from "common/interfaces";
+import type { Episode } from "./entities/episode.entity";
 
 @Controller("episode")
 export class EpisodeController {

@@ -1,4 +1,4 @@
-import { Endpoints } from "common/interfaces";
+import type { Endpoints } from "common/interfaces";
 
 interface GetUrlOptions {
   enpoint: Endpoints;

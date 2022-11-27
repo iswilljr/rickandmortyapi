@@ -1,5 +1,5 @@
-import { Character } from "character/entities/character.entity";
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Character } from "character/entities/character.entity";
 
 @Entity()
 export class Episode {

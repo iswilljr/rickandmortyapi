@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { DeepPartial, In, Repository } from "typeorm";
 import { CRUDService } from "common/classes/crud.service";
-import { CharacterResponse } from "common/interfaces/character.interface";
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
-import { DeepPartial, In, Repository } from "typeorm";
-import { CreateCharacterDto } from "../seed/interfaces/create-character.inteface";
 import { Character } from "./entities/character.entity";
 import { transformCharacter } from "./helpers/transform-character.helper";
+import type { CharacterResponse } from "common/interfaces/character.interface";
+import type { CreateCharacterDto } from "../seed/interfaces/create-character.inteface";
 
 @Injectable()
 export class CharacterService extends CRUDService<Character, CharacterResponse> {

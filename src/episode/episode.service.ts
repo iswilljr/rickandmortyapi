@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import { CRUDService } from "common/classes/crud.service";
 import { Episode } from "./entities/episode.entity";
-import { EpisodeResponse } from "common/interfaces/episode.interface";
 import { transformEpisode } from "./helpers/transform-episode.helper";
+import type { Repository } from "typeorm";
+import type { EpisodeResponse } from "common/interfaces/episode.interface";
 
 @Injectable()
 export class EpisodeService extends CRUDService<Episode, EpisodeResponse> {

@@ -1,5 +1,5 @@
-import type { Character } from "character/entities/character.entity";
 import { getUrl } from "common/helpers/get-url.helper";
+import type { Character } from "character/entities/character.entity";
 import type { CharacterResponse } from "common/interfaces/character.interface";
 
 export function transformCharacter(character: Character): CharacterResponse {

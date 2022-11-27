@@ -1,10 +1,10 @@
 import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { CharacterResponse } from "common/interfaces/character.interface";
-import { CharacterService } from "./character.service";
 import { Page } from "common/decorators/page.decorator";
+import { CharacterService } from "./character.service";
 import type { FindOptionsRelations } from "typeorm";
-import type { Character } from "./entities/character.entity";
+import type { CharacterResponse } from "common/interfaces/character.interface";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
+import type { Character } from "./entities/character.entity";
 
 @Controller("character")
 export class CharacterController {
