@@ -1,11 +1,13 @@
 import type { Location } from "location/entities/location.entity";
 import type { LocationResponse } from "common/interfaces/location.interface";
+import { getUrl } from "common/helpers/get-url.helper";
 
-export function transformLocation(character: Location): LocationResponse {
-  const { residents, charactersOrigin, uuid, ...characterObj } = character;
+export function transformLocation(location: Location): LocationResponse {
+  const { residents, charactersOrigin, uuid, ...locationObj } = location;
 
   return {
-    ...characterObj,
-    residents: residents?.map((resident) => resident.url),
+    ...locationObj,
+    url: getUrl({ enpoint: "location", id: location.id }),
+    residents: residents?.map((resident) => getUrl({ enpoint: "character", id: resident.id })),
   };
 }

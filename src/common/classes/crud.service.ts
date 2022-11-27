@@ -1,4 +1,5 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
+import { getUrl } from "common/helpers/get-url.helper";
 import { CRUDServiceOptions } from "common/interfaces/crud.interface";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
 import type {
@@ -52,8 +53,8 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
           info: {
             count,
             pages,
-            next: nPage < pages ? (nPage + 1).toString() : null,
-            prev: page > 0 ? nPage.toString() : null,
+            next: nPage < pages ? getUrl({ enpoint: this.options.endpoint, page: nPage + 1 }) : null,
+            prev: page > 0 ? getUrl({ enpoint: this.options.endpoint, page }) : null,
           },
           results: objs.map(this.options.transformObj),
         };

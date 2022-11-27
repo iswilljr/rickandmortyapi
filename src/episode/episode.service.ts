@@ -9,6 +9,10 @@ import { transformEpisode } from "./helpers/transform-episode.helper";
 @Injectable()
 export class EpisodeService extends CRUDService<Episode, EpisodeResponse> {
   constructor(@InjectRepository(Episode) episodeRepository: Repository<Episode>) {
-    super(episodeRepository, { loggerName: "EpisodeService", transformObj: transformEpisode });
+    super(episodeRepository, {
+      loggerName: "EpisodeService",
+      transformObj: transformEpisode,
+      endpoint: "episode",
+    });
   }
 }

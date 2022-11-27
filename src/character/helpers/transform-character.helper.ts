@@ -1,4 +1,5 @@
 import type { Character } from "character/entities/character.entity";
+import { getUrl } from "common/helpers/get-url.helper";
 import type { CharacterResponse } from "common/interfaces/character.interface";
 
 export function transformCharacter(character: Character): CharacterResponse {
@@ -6,8 +7,9 @@ export function transformCharacter(character: Character): CharacterResponse {
 
   return {
     ...characterObj,
-    location: location ? { name: location.name, url: location.url } : undefined,
-    origin: origin ? { name: origin.name, url: origin.url } : undefined,
-    episode: episode?.map?.((episode) => episode.url),
+    url: getUrl({ enpoint: "character", id: character.id }),
+    location: location ? { name: location.name, url: getUrl({ enpoint: "location", id: location.id }) } : undefined,
+    origin: origin ? { name: origin.name, url: getUrl({ enpoint: "location", id: origin.id }) } : undefined,
+    episode: episode?.map?.((episode) => getUrl({ enpoint: "episode", id: episode.id })),
   };
 }

@@ -9,6 +9,10 @@ import { transformLocation } from "./helpers/transform-location.helper";
 @Injectable()
 export class LocationService extends CRUDService<Location, LocationResponse> {
   constructor(@InjectRepository(Location) locationRepository: Repository<Location>) {
-    super(locationRepository, { loggerName: "LocationService", transformObj: transformLocation });
+    super(locationRepository, {
+      loggerName: "LocationService",
+      transformObj: transformLocation,
+      endpoint: "location",
+    });
   }
 }

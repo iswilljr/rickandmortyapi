@@ -16,7 +16,11 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
     @InjectRepository(Episode) private readonly episodeRepository: Repository<Episode>,
     @InjectRepository(Location) private readonly locationRepository: Repository<Location>
   ) {
-    super(characterRepository, { loggerName: "CharacterService", transformObj: transformCharacter });
+    super(characterRepository, {
+      loggerName: "CharacterService",
+      transformObj: transformCharacter,
+      endpoint: "character",
+    });
   }
 
   async createCharacters(create: CreateCharacterDto[]): Promise<CharacterResponse[]> {
