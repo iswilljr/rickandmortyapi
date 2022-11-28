@@ -1,5 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { Page } from "common/decorators/page.decorator";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { EpisodeDto } from "./dto/episode.dto";
 import { EpisodeService } from "./episode.service";
 import type { FindOptionsRelations } from "typeorm";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
@@ -13,8 +13,8 @@ export class EpisodeController {
   constructor(private readonly episodeService: EpisodeService) {}
 
   @Get()
-  findAll(@Page() page: number): Promise<PaginationResponse<EpisodeResponse>> {
-    return this.episodeService.findAll(page, { relations: this.loadRelations });
+  findAll(@Query() { page = 1, ...filter }: EpisodeDto): Promise<PaginationResponse<EpisodeResponse>> {
+    return this.episodeService.findAll(page, filter, { relations: this.loadRelations });
   }
 
   @Get(":id")

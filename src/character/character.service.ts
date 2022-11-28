@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, In, Repository } from "typeorm";
+import { DeepPartial, FindOptionsWhere, In, Repository } from "typeorm";
 import { CRUDService } from "common/classes/crud.service";
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
@@ -40,7 +40,10 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
       this.episodeRepository.findBy({ id: In(episode) }),
       locationId || originId
         ? this.locationRepository.findBy(
-            [].concat(locationId ? [{ id: locationId }] : [], originId ? [{ id: originId }] : [])
+            ([] as Array<FindOptionsWhere<Location>>).concat(
+              locationId ? [{ id: locationId }] : [],
+              originId ? [{ id: originId }] : []
+            )
           )
         : undefined,
     ]);

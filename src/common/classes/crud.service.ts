@@ -2,11 +2,12 @@ import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
 import { getUrl } from "common/helpers/get-url.helper";
 import { CRUDServiceOptions } from "common/interfaces/crud.interface";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
-import type {
+import {
   DeepPartial,
   FindManyOptions,
   FindOneOptions,
   FindOptionsWhere,
+  ILike,
   ObjectLiteral,
   Repository,
 } from "typeorm";
@@ -34,27 +35,35 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
   async findAll(
     page: number,
-    options?: FindManyOptions<Entity>
+    filter: FindOptionsWhere<Entity>,
+    options?: Omit<FindManyOptions<Entity>, "skip" | "take" | "order" | "where">
   ): Promise<PaginationResponse<ReturnType<typeof this.options.transformObj>>> {
     try {
-      const nPage = page + 1;
+      const where: FindOptionsWhere<Entity> = {};
+      for (const key in filter) {
+        const value = filter[key];
+        if (typeof value === "string") where[key] = ILike(value) as any;
+      }
+
+      const nPage = page - 1;
       const [objs, count] = await this.repository.findAndCount({
         ...options,
-        skip: page * this.MAX_RESULTS,
+        skip: nPage * this.MAX_RESULTS,
         take: this.MAX_RESULTS,
         order: { id: { direction: "ASC" } } as any,
+        where: filter,
       });
 
       const nPages = count / this.MAX_RESULTS;
       const pages = count % this.MAX_RESULTS === 0 ? nPages : Math.floor(nPages) + 1;
 
-      if (nPage <= pages) {
+      if (page <= pages) {
         return {
           info: {
             count,
             pages,
-            next: nPage < pages ? getUrl({ enpoint: this.options.endpoint, page: nPage + 1 }) : null,
-            prev: page > 0 ? getUrl({ enpoint: this.options.endpoint, page }) : null,
+            next: page < pages ? getUrl({ enpoint: this.options.endpoint, page: page + 1 }) : null,
+            prev: nPage > 0 ? getUrl({ enpoint: this.options.endpoint, page: page - 1 }) : null,
           },
           results: objs.map(this.options.transformObj),
         };

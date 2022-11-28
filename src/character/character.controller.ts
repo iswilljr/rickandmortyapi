@@ -1,5 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
-import { Page } from "common/decorators/page.decorator";
+import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { CharacterDto } from "./dto/character.dto";
 import { CharacterService } from "./character.service";
 import type { FindOptionsRelations } from "typeorm";
 import type { CharacterResponse } from "common/interfaces/character.interface";
@@ -13,8 +13,8 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Get()
-  findAll(@Page() page: number): Promise<PaginationResponse<CharacterResponse>> {
-    return this.characterService.findAll(page, { relations: this.loadRelations });
+  findAll(@Query() { page = 1, ...filter }: CharacterDto): Promise<PaginationResponse<CharacterResponse>> {
+    return this.characterService.findAll(page, filter, { relations: this.loadRelations });
   }
 
   @Get(":id")
