@@ -32,7 +32,6 @@ import { validationSchema } from "./config/env.config";
     CharacterModule,
     EpisodeModule,
     LocationModule,
-    SeedModule,
-  ],
+  ].concat(process.env.NODE_ENV === "development" ? [SeedModule] : []),
 })
 export class AppModule {}
