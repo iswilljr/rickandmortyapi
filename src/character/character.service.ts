@@ -23,11 +23,9 @@ export class CharacterService extends CRUDService<Character, CharacterResponse> 
     });
   }
 
-  async createCharacters(create: CreateCharacterDto[]): Promise<CharacterResponse[]> {
+  async createCharacters(create: CreateCharacterDto[]): Promise<void> {
     const characters = await Promise.all(create.map((character) => this.getCharacter(character)));
-
-    // eslint-disable-next-line @typescript-eslint/return-await
-    return this.create(characters) as unknown as Promise<CharacterResponse[]>;
+    await this.create(characters);
   }
 
   private async getCharacter({
