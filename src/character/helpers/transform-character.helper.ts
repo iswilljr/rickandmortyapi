@@ -8,8 +8,14 @@ export function transformCharacter(character: Character): CharacterResponse {
   return {
     ...characterObj,
     url: getUrl({ enpoint: "character", id: character.id }),
-    location: location ? { name: location.name, url: getUrl({ enpoint: "location", id: location.id }) } : undefined,
-    origin: origin ? { name: origin.name, url: getUrl({ enpoint: "location", id: origin.id }) } : undefined,
+    location: {
+      name: location.name ?? "unknown",
+      url: location ? getUrl({ enpoint: "location", id: location.id }) : "",
+    },
+    origin: {
+      name: origin.name ?? "unknown",
+      url: origin ? getUrl({ enpoint: "location", id: origin.id }) : "unknown",
+    },
     episode: episode?.map?.((episode) => getUrl({ enpoint: "episode", id: episode.id })),
   };
 }
