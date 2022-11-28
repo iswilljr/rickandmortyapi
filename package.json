@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "download-images": "sh scripts/download-images.sh",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "dev": "nest start --watch",
