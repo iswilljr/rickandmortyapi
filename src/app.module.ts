@@ -1,6 +1,8 @@
+import { resolve } from "path";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ServeStaticModule } from "@nestjs/serve-static";
 import { CharacterModule } from "./character/character.module";
 import { EpisodeModule } from "./episode/episode.module";
 import { LocationModule } from "./location/location.module";
@@ -9,6 +11,10 @@ import { validationSchema } from "./config/env.config";
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: resolve("images"),
+      serveRoot: "/api/character/avatar",
+    }),
     ConfigModule.forRoot({
       envFilePath: [".env.local"],
       validationSchema,
