@@ -8,6 +8,8 @@ import { EpisodeModule } from "./episode/episode.module";
 import { LocationModule } from "./location/location.module";
 import { SeedModule } from "./seed/seed.module";
 import { validationSchema } from "./config/env.config";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
 
 @Module({
   imports: [
@@ -33,5 +35,7 @@ import { validationSchema } from "./config/env.config";
     EpisodeModule,
     LocationModule,
   ].concat(process.env.NODE_ENV === "development" ? [SeedModule] : []),
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
