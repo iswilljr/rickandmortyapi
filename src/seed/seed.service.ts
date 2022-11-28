@@ -40,14 +40,17 @@ export class SeedService {
 
   private async seedCharacters(): Promise<void> {
     const characters = await this.getData<CharacterResponse>("/character");
-    const charactersToInsert: CreateCharacterDto[] = characters.map(({ location, origin, episode, ...character }) => {
-      return {
-        ...character,
-        episode: episode.map(this.getIdFromURL),
-        originId: this.getIdFromURL(origin.url),
-        locationId: this.getIdFromURL(location.url),
-      };
-    });
+    const charactersToInsert: CreateCharacterDto[] = characters.map(
+      ({ location, origin, episode, image, ...character }) => {
+        return {
+          ...character,
+          image: image.split("/").pop() as string,
+          episode: episode.map(this.getIdFromURL),
+          originId: this.getIdFromURL(origin.url),
+          locationId: this.getIdFromURL(location.url),
+        };
+      }
+    );
     await this.characterService.createCharacters(charactersToInsert);
   }
 

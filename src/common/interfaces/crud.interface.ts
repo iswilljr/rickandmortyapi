@@ -1,4 +1,4 @@
-export type Endpoints = "character" | "episode" | "location";
+export type Endpoints = "character" | "character/avatar" | "episode" | "location";
 
 export interface CRUDServiceOptions<Entity, Response> {
   endpoint: Endpoints;

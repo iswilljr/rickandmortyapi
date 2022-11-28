@@ -2,7 +2,7 @@ import type { Endpoints } from "common/interfaces";
 
 interface GetUrlOptions {
   enpoint: Endpoints;
-  id?: number;
+  id?: string | number;
   page?: number;
 }
 
