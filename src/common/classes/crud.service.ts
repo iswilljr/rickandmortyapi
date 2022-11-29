@@ -56,8 +56,8 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
           info: {
             count,
             pages,
-            next: page < pages ? getUrl({ enpoint: this.options.endpoint, page: page + 1, query: filter }) : null,
-            prev: nPage > 0 ? getUrl({ enpoint: this.options.endpoint, page: page - 1, query: filter }) : null,
+            next: page < pages ? getUrl({ endpoint: this.options.endpoint, page: page + 1, query: filter }) : null,
+            prev: nPage > 0 ? getUrl({ endpoint: this.options.endpoint, page: page - 1, query: filter }) : null,
           },
           results: objs.map(this.options.transformObj),
         };

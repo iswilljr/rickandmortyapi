@@ -7,7 +7,7 @@ export function transformEpisode(episode: Episode): EpisodeResponse {
 
   return {
     ...episodeObj,
-    url: getUrl({ enpoint: "episode", id: episode.id }),
-    characters: characters?.map((character) => getUrl({ enpoint: "character", id: character.id })),
+    url: getUrl({ endpoint: "episode", id: episode.id }),
+    characters: characters?.map((character) => getUrl({ endpoint: "character", id: character.id })),
   };
 }

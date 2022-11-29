@@ -7,7 +7,7 @@ export function transformLocation(location: Location): LocationResponse {
 
   return {
     ...locationObj,
-    url: getUrl({ enpoint: "location", id: location.id }),
-    residents: residents?.map((resident) => getUrl({ enpoint: "character", id: resident.id })),
+    url: getUrl({ endpoint: "location", id: location.id }),
+    residents: residents?.map((resident) => getUrl({ endpoint: "character", id: resident.id })),
   };
 }
