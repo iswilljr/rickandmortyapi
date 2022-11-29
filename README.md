@@ -8,4 +8,29 @@ A backend clone project of the [The Rick and Morty API](https://rickandmortyapi.
 
 ## Getting Started
 
+Install dependencies with yarn
+
+```bash
+yarn
+```
+
+Start local postgres database
+
+```bash
+docker-compose --env-file .env.local up -d
+```
+
+Seed the database
+
+```bash
+yarn dev
+curl --request POST --url http://localhost:4000/api/seed
+```
+
+Test the REST api
+
+```bash
+yarn test
+```
+
 **Check out the official [documentation](https://rickandmortyapi.com/documentation) to get started**
