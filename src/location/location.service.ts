@@ -15,7 +15,7 @@ export class LocationService {
       residents: true,
     },
     select: {
-      residents: { id: true },
+      residents: { id: true, uuid: true },
     },
   };
 

@@ -15,7 +15,7 @@ export class EpisodeService {
       characters: true,
     },
     select: {
-      characters: { id: true },
+      characters: { id: true, uuid: true },
     },
   };
 

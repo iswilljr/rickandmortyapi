@@ -20,7 +20,7 @@ export class CharacterService {
       location: true,
     },
     select: {
-      episode: { id: true },
+      episode: { id: true, uuid: true },
       origin: { id: true, name: true },
       location: { id: true, name: true },
     },
