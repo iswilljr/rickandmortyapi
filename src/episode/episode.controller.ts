@@ -1,4 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
+import { Id } from "common/decorators/id.decorator";
 import { EpisodeQueryDto } from "./dto/episode-query.dto";
 import { EpisodeService } from "./episode.service";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
@@ -14,7 +15,7 @@ export class EpisodeController {
   }
 
   @Get(":id")
-  findOne(@Param("id", ParseIntPipe) id: number): Promise<EpisodeResponse> {
-    return this.episodeService.findOne(id);
+  findOneOrMany(@Id() id: number[]): Promise<EpisodeResponse | EpisodeResponse[]> {
+    return this.episodeService.findOneOrMany(id);
   }
 }

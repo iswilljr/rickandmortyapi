@@ -29,8 +29,8 @@ export class EpisodeService {
     });
   }
 
-  findOne(id: number): Promise<EpisodeResponse> {
-    return this.crud.findOneBy({ id }, this.episodeOptions);
+  findOneOrMany(id: number[]): Promise<EpisodeResponse | EpisodeResponse[]> {
+    return this.crud.findOneOrMany(id, this.episodeOptions);
   }
 
   findAll(query: EpisodeQueryDto): Promise<PaginationResponse<EpisodeResponse>> {

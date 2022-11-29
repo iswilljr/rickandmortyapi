@@ -1,7 +1,7 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
 import { getUrl } from "common/helpers/get-url.helper";
 import { CRUDServiceFindAllOptions, CRUDServiceOptions } from "common/interfaces/crud.interface";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, ILike, ObjectLiteral, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, ILike, In, ObjectLiteral, Repository } from "typeorm";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
 
 export class CRUDService<Entity extends ObjectLiteral, Response> {
@@ -69,13 +69,18 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     throw new NotFoundException("Page not found");
   }
 
-  async findOneBy(
-    where: FindOptionsWhere<Entity> | Array<FindOptionsWhere<Entity>>,
+  async findOneOrMany(
+    id: number[],
     options?: Omit<FindOneOptions<Entity>, "where">
-  ): Promise<ReturnType<typeof this.options.transformObj>> {
+  ): Promise<ReturnType<typeof this.options.transformObj> | Array<ReturnType<typeof this.options.transformObj>>> {
     try {
-      const obj = await this.repository.findOne({ ...options, where });
-      if (obj) return this.options.transformObj(obj);
+      const obj = await (id.length > 1
+        ? this.repository.find({ ...options, where: { id: In(id) } as any, order: { id: { direction: "ASC" } } as any })
+        : this.repository.findOne({ where: { id: id[0] } as any }));
+
+      const isObjArray = Array.isArray(obj);
+      if (obj && isObjArray && obj.length > 0) return obj.map(this.options.transformObj);
+      if (obj && !isObjArray) return this.options.transformObj(obj);
     } catch (error) {
       this.handlerError(error);
     }

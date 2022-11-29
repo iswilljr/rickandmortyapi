@@ -29,8 +29,8 @@ export class LocationService {
     });
   }
 
-  findOne(id: number): Promise<LocationResponse> {
-    return this.crud.findOneBy({ id }, this.locationOptions);
+  findOneOrMany(id: number[]): Promise<LocationResponse | LocationResponse[]> {
+    return this.crud.findOneOrMany(id, this.locationOptions);
   }
 
   findAll(query: LocationQueryDto): Promise<PaginationResponse<LocationResponse>> {

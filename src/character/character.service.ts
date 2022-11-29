@@ -40,8 +40,8 @@ export class CharacterService {
     });
   }
 
-  findOne(id: number): Promise<CharacterResponse> {
-    return this.crud.findOneBy({ id }, this.characterOptions);
+  findOneOrMany(id: number[]): Promise<CharacterResponse | CharacterResponse[]> {
+    return this.crud.findOneOrMany(id, this.characterOptions);
   }
 
   findAll(query: CharacterQueryDto): Promise<PaginationResponse<CharacterResponse>> {

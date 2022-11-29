@@ -1,4 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
+import { Id } from "common/decorators/id.decorator";
 import { LocationQueryDto } from "./dto/location-query.dto";
 import { LocationService } from "./location.service";
 import type { LocationResponse } from "common/interfaces/location.interface";
@@ -14,7 +15,7 @@ export class LocationController {
   }
 
   @Get(":id")
-  findOne(@Param("id", ParseIntPipe) id: number): Promise<LocationResponse> {
-    return this.locationService.findOne(id);
+  findOneOrMany(@Id() id: number[]): Promise<LocationResponse | LocationResponse[]> {
+    return this.locationService.findOneOrMany(id);
   }
 }
