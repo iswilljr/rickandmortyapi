@@ -76,7 +76,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     try {
       const obj = await (id.length > 1
         ? this.repository.find({ ...options, where: { id: In(id) } as any, order: { id: { direction: "ASC" } } as any })
-        : this.repository.findOne({ where: { id: id[0] } as any }));
+        : this.repository.findOne({ ...options, where: { id: id[0] } as any }));
 
       const isObjArray = Array.isArray(obj);
       if (obj && isObjArray && obj.length > 0) return obj.map(this.options.transformObj);
