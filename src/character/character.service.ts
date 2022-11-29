@@ -1,31 +1,47 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOptionsWhere, In, Repository } from "typeorm";
+import { DeepPartial, FindManyOptions, FindOptionsWhere, In, Repository } from "typeorm";
 import { CRUDService } from "common/classes/crud.service";
 import { Episode } from "episode/entities/episode.entity";
 import { Location } from "location/entities/location.entity";
 import { Character } from "./entities/character.entity";
 import { transformCharacter } from "./helpers/transform-character.helper";
 import type { CharacterResponse } from "common/interfaces/character.interface";
+import type { PaginationResponse } from "common/interfaces";
 import type { CreateCharacterDto } from "../seed/interfaces/create-character.inteface";
+import type { CharacterQueryDto } from "./dto/character-query.dto";
 
 @Injectable()
-export class CharacterService extends CRUDService<Character, CharacterResponse> {
+export class CharacterService {
+  private readonly characterOptions: FindManyOptions<Character> = {
+    relations: { episode: true, origin: true, location: true },
+  };
+
+  readonly crud: CRUDService<Character, CharacterResponse>;
+
   constructor(
     @InjectRepository(Character) characterRepository: Repository<Character>,
     @InjectRepository(Episode) private readonly episodeRepository: Repository<Episode>,
     @InjectRepository(Location) private readonly locationRepository: Repository<Location>
   ) {
-    super(characterRepository, {
+    this.crud = new CRUDService(characterRepository, {
       loggerName: "CharacterService",
       transformObj: transformCharacter,
       endpoint: "character",
     });
   }
 
+  findOne(id: number): Promise<CharacterResponse> {
+    return this.crud.findOneBy({ id }, this.characterOptions);
+  }
+
+  findAll(query: CharacterQueryDto): Promise<PaginationResponse<CharacterResponse>> {
+    return this.crud.findAll({ query, options: this.characterOptions });
+  }
+
   async createCharacters(create: CreateCharacterDto[]): Promise<void> {
     const characters = await Promise.all(create.map((character) => this.getCharacter(character)));
-    await this.create(characters);
+    await this.crud.create(characters);
   }
 
   private async getCharacter({

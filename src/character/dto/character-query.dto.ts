@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { PaginationDto } from "common/dto/pagination.dto";
 
-export class CharacterDto extends PaginationDto {
+export class CharacterQueryDto extends PaginationDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()

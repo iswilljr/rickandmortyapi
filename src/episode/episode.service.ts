@@ -3,16 +3,29 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CRUDService } from "common/classes/crud.service";
 import { Episode } from "./entities/episode.entity";
 import { transformEpisode } from "./helpers/transform-episode.helper";
-import type { Repository } from "typeorm";
+import type { FindManyOptions, Repository } from "typeorm";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
+import { EpisodeQueryDto } from "./dto/episode-query.dto";
+import { PaginationResponse } from "common/interfaces";
 
 @Injectable()
-export class EpisodeService extends CRUDService<Episode, EpisodeResponse> {
+export class EpisodeService {
+  private readonly episodeOptions: FindManyOptions<Episode> = { relations: { characters: true } };
+  readonly crud: CRUDService<Episode, EpisodeResponse>;
+
   constructor(@InjectRepository(Episode) episodeRepository: Repository<Episode>) {
-    super(episodeRepository, {
+    this.crud = new CRUDService(episodeRepository, {
       loggerName: "EpisodeService",
       transformObj: transformEpisode,
       endpoint: "episode",
     });
+  }
+
+  findOne(id: number): Promise<EpisodeResponse> {
+    return this.crud.findOneBy({ id }, this.episodeOptions);
+  }
+
+  findAll(query: EpisodeQueryDto): Promise<PaginationResponse<EpisodeResponse>> {
+    return this.crud.findAll({ query, options: this.episodeOptions });
   }
 }

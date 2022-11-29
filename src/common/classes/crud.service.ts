@@ -1,16 +1,8 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
 import { getUrl } from "common/helpers/get-url.helper";
-import { CRUDServiceOptions } from "common/interfaces/crud.interface";
+import { CRUDServiceFindAllOptions, CRUDServiceOptions } from "common/interfaces/crud.interface";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, ILike, ObjectLiteral, Repository } from "typeorm";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
-import {
-  DeepPartial,
-  FindManyOptions,
-  FindOneOptions,
-  FindOptionsWhere,
-  ILike,
-  ObjectLiteral,
-  Repository,
-} from "typeorm";
 
 export class CRUDService<Entity extends ObjectLiteral, Response> {
   private readonly MAX_RESULTS = 20;
@@ -34,15 +26,18 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
   }
 
   async findAll(
-    page: number,
-    filter: FindOptionsWhere<Entity>,
-    options?: Omit<FindManyOptions<Entity>, "skip" | "take" | "order" | "where">
+    findAllOptions: CRUDServiceFindAllOptions<Entity>
   ): Promise<PaginationResponse<ReturnType<typeof this.options.transformObj>>> {
+    const {
+      query: { page = 1, ...filter },
+      options,
+    } = findAllOptions;
+
     try {
       const where: FindOptionsWhere<Entity> = {};
       for (const key in filter) {
         const value = filter[key];
-        if (typeof value === "string") where[key] = ILike(value) as any;
+        if (typeof value === "string") where[key as keyof Entity] = ILike(`%${value}%`) as any;
       }
 
       const nPage = page - 1;
@@ -51,19 +46,18 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
         skip: nPage * this.MAX_RESULTS,
         take: this.MAX_RESULTS,
         order: { id: { direction: "ASC" } } as any,
-        where: filter,
+        where,
       });
 
       const nPages = count / this.MAX_RESULTS;
       const pages = count % this.MAX_RESULTS === 0 ? nPages : Math.floor(nPages) + 1;
-
       if (page <= pages) {
         return {
           info: {
             count,
             pages,
-            next: page < pages ? getUrl({ enpoint: this.options.endpoint, page: page + 1 }) : null,
-            prev: nPage > 0 ? getUrl({ enpoint: this.options.endpoint, page: page - 1 }) : null,
+            next: page < pages ? getUrl({ enpoint: this.options.endpoint, page: page + 1, query: filter }) : null,
+            prev: nPage > 0 ? getUrl({ enpoint: this.options.endpoint, page: page - 1, query: filter }) : null,
           },
           results: objs.map(this.options.transformObj),
         };

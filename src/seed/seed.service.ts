@@ -29,13 +29,13 @@ export class SeedService {
   private async seedEpisodes(): Promise<void> {
     const episodes = await this.getData<EpisodeResponse>("/episode");
     const episodesToInsert = episodes.map(({ characters, ...episode }) => episode);
-    await this.episodeService.create(episodesToInsert);
+    await this.episodeService.crud.create(episodesToInsert);
   }
 
   private async seedLocations(): Promise<void> {
     const locations = await this.getData<LocationResponse>("/location");
     const locationsToInsert = locations.map(({ residents, ...location }) => location);
-    await this.locationService.create(locationsToInsert);
+    await this.locationService.crud.create(locationsToInsert);
   }
 
   private async seedCharacters(): Promise<void> {
@@ -56,9 +56,9 @@ export class SeedService {
 
   private async preSeed(): Promise<void> {
     await Promise.all([
-      this.characterService.removeAll(),
-      this.episodeService.removeAll(),
-      this.locationService.removeAll(),
+      this.characterService.crud.removeAll(),
+      this.episodeService.crud.removeAll(),
+      this.locationService.crud.removeAll(),
     ]);
   }
 

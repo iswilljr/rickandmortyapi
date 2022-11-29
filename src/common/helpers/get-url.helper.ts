@@ -4,6 +4,7 @@ interface GetUrlOptions {
   enpoint: Endpoints;
   id?: string | number;
   page?: number;
+  query?: Record<string, string | undefined>;
 }
 
 const removeLastSlash = (str: string): string => str.replace(/\/$/, "");
