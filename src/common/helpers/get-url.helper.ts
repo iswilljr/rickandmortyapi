@@ -9,10 +9,15 @@ interface GetUrlOptions {
 
 const removeLastSlash = (str: string): string => str.replace(/\/$/, "");
 
-export const getUrl = ({ enpoint, id, page }: GetUrlOptions): string => {
+export const getUrl = ({ enpoint, id, page, query }: GetUrlOptions): string => {
   const url = new URL(removeLastSlash(`/api/${enpoint}/${id ?? ""}`), removeLastSlash(process.env.BASE_URL as string));
 
-  if (page) url.searchParams.set("page", page.toString());
+  const searchParams = Object.assign({}, query ?? {}, { page });
+
+  for (const key in searchParams) {
+    const value = searchParams[key];
+    if (value !== undefined) url.searchParams.set(key, value);
+  }
 
   return url.toString();
 };
