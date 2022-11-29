@@ -10,7 +10,15 @@ import { PaginationResponse } from "common/interfaces";
 
 @Injectable()
 export class EpisodeService {
-  private readonly episodeOptions: FindManyOptions<Episode> = { relations: { characters: true } };
+  private readonly episodeOptions: FindManyOptions<Episode> = {
+    relations: {
+      characters: true,
+    },
+    select: {
+      characters: { id: true },
+    },
+  };
+
   readonly crud: CRUDService<Episode, EpisodeResponse>;
 
   constructor(@InjectRepository(Episode) episodeRepository: Repository<Episode>) {

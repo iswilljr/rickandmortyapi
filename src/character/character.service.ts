@@ -14,7 +14,16 @@ import type { CharacterQueryDto } from "./dto/character-query.dto";
 @Injectable()
 export class CharacterService {
   private readonly characterOptions: FindManyOptions<Character> = {
-    relations: { episode: true, origin: true, location: true },
+    relations: {
+      episode: true,
+      origin: true,
+      location: true,
+    },
+    select: {
+      episode: { id: true },
+      origin: { id: true, name: true },
+      location: { id: true, name: true },
+    },
   };
 
   readonly crud: CRUDService<Character, CharacterResponse>;

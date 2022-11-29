@@ -10,7 +10,15 @@ import { PaginationResponse } from "common/interfaces";
 
 @Injectable()
 export class LocationService {
-  private readonly locationOptions: FindManyOptions<Location> = { relations: { residents: true } };
+  private readonly locationOptions: FindManyOptions<Location> = {
+    relations: {
+      residents: true,
+    },
+    select: {
+      residents: { id: true },
+    },
+  };
+
   readonly crud: CRUDService<Location, LocationResponse>;
 
   constructor(@InjectRepository(Location) locationRepository: Repository<Location>) {
