@@ -9,6 +9,7 @@
     "download-images": "sh scripts/download-images.sh",
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "postbuild": "cp -r ./images ./dist",
     "dev": "NODE_ENV=development nest start --watch",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "NODE_ENV=production node dist/main",

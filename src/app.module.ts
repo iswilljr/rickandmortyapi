@@ -14,7 +14,7 @@ import { AppService } from "./app.service";
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: resolve("images"),
+      rootPath: resolve(__dirname, "images"),
       serveRoot: "/api/character/avatar",
     }),
     ConfigModule.forRoot({
