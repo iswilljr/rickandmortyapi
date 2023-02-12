@@ -39,3 +39,4 @@ coverage
 
 # Others
 .postgres
+pnpm-lock.yaml

@@ -39,3 +39,4 @@ coverage
 
 # Others
 .postgres
+remix.env.d.ts
