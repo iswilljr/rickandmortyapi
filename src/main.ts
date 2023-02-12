@@ -18,8 +18,6 @@ async function bootstrap(): Promise<void> {
     })
   );
 
-  app.setGlobalPrefix("api");
-
   await app.listen(+(process.env.PORT as string) || 4000);
 
   logger.log(`App running on ${await app.getUrl()}`);
