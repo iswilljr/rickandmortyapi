@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { PaginationDto } from "common/dto/pagination.dto";
+import { PaginationDto } from "../../common/dto/pagination.dto";
 
 export class EpisodeQueryDto extends PaginationDto {
   @IsString()

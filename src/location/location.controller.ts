@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Id } from "common/decorators/id.decorator";
+import { Id } from "../common/decorators/id.decorator";
 import { LocationQueryDto } from "./dto/location-query.dto";
 import { LocationService } from "./location.service";
 import type { LocationResponse } from "common/interfaces/location.interface";

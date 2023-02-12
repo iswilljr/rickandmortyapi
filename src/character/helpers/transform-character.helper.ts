@@ -1,6 +1,6 @@
-import { getUrl } from "common/helpers/get-url.helper";
-import type { Character } from "character/entities/character.entity";
-import type { CharacterResponse } from "common/interfaces/character.interface";
+import { getUrl } from "../../common/helpers/get-url.helper";
+import type { Character } from "../../character/entities/character.entity";
+import type { CharacterResponse } from "../../common/interfaces/character.interface";
 
 export function transformCharacter(character: Character): CharacterResponse {
   const { id, name, status, species, type, gender, origin, location, image, episode, created } = character;

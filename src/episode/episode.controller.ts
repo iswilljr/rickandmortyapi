@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Id } from "common/decorators/id.decorator";
+import { Id } from "../common/decorators/id.decorator";
 import { EpisodeQueryDto } from "./dto/episode-query.dto";
 import { EpisodeService } from "./episode.service";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";

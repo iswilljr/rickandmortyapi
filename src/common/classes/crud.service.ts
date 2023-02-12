@@ -1,6 +1,6 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
-import { getUrl } from "common/helpers/get-url.helper";
-import { CRUDServiceFindAllOptions, CRUDServiceOptions } from "common/interfaces/crud.interface";
+import { getUrl } from "../../common/helpers/get-url.helper";
+import { CRUDServiceFindAllOptions, CRUDServiceOptions } from ".,/../common/interfaces/crud.interface";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, ILike, In, ObjectLiteral, Repository } from "typeorm";
 import type { PaginationResponse } from "common/interfaces/pagination.interface";
 

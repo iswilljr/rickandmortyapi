@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CRUDService } from "common/classes/crud.service";
+import { CRUDService } from "../common/classes/crud.service";
 import { Episode } from "./entities/episode.entity";
 import { transformEpisode } from "./helpers/transform-episode.helper";
 import type { FindManyOptions, Repository } from "typeorm";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
 import { EpisodeQueryDto } from "./dto/episode-query.dto";
-import { PaginationResponse } from "common/interfaces";
+import { PaginationResponse } from "../common/interfaces";
 
 @Injectable()
 export class EpisodeService {

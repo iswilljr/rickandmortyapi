@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { CharacterService } from "character/character.service";
-import { EpisodeService } from "episode/episode.service";
-import { LocationService } from "location/location.service";
-import type { CharacterResponse, EpisodeResponse, LocationResponse, PaginationResponse } from "common/interfaces";
+import { CharacterService } from "../character/character.service";
+import { EpisodeService } from "../episode/episode.service";
+import { LocationService } from "../location/location.service";
+import type { CharacterResponse, EpisodeResponse, LocationResponse, PaginationResponse } from "../common/interfaces";
 import type { CreateCharacterDto } from "./interfaces/create-character.inteface";
 
 @Injectable()

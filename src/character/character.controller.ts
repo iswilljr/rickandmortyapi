@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { Id } from "common/decorators/id.decorator";
+import { Id } from "../common/decorators/id.decorator";
 import { CharacterQueryDto } from "./dto/character-query.dto";
 import { CharacterService } from "./character.service";
 import type { CharacterResponse } from "common/interfaces/character.interface";

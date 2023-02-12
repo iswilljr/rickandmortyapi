@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindManyOptions, FindOptionsWhere, In, Repository } from "typeorm";
-import { CRUDService } from "common/classes/crud.service";
-import { Episode } from "episode/entities/episode.entity";
-import { Location } from "location/entities/location.entity";
+import { CRUDService } from "../common/classes/crud.service";
+import { Episode } from "../episode/entities/episode.entity";
+import { Location } from "../location/entities/location.entity";
 import { Character } from "./entities/character.entity";
 import { transformCharacter } from "./helpers/transform-character.helper";
-import type { CharacterResponse } from "common/interfaces/character.interface";
-import type { PaginationResponse } from "common/interfaces";
+import type { CharacterResponse } from "../common/interfaces/character.interface";
+import type { PaginationResponse } from "../common/interfaces";
 import type { CreateCharacterDto } from "../seed/interfaces/create-character.inteface";
 import type { CharacterQueryDto } from "./dto/character-query.dto";
 
