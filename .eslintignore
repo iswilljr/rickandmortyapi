@@ -39,4 +39,8 @@ coverage
 
 # Others
 .postgres
-remix.env.d.ts
+.cache
+.output
+build
+api
+tailwind.css

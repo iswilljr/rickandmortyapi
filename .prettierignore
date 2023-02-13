@@ -39,4 +39,9 @@ coverage
 
 # Others
 .postgres
+.cache
+.output
+build
+api
+tailwind.css
 pnpm-lock.yaml
