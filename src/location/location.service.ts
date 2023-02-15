@@ -3,10 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CRUDService } from "../common/classes/crud.service";
 import { Location } from "./entities/location.entity";
 import { transformLocation } from "./helpers/transform-location.helper";
-import type { FindManyOptions, Repository } from "typeorm";
+import { type FindManyOptions, Repository } from "typeorm";
 import type { LocationResponse } from "../common/interfaces/location.interface";
-import { LocationQueryDto } from "./dto/location-query.dto";
-import { PaginationResponse } from "../common/interfaces";
+import type { LocationQueryDto } from "./dto/location-query.dto";
+import type { PaginationResponse } from "../common/interfaces";
 
 @Injectable()
 export class LocationService {

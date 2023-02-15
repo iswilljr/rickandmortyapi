@@ -1,4 +1,4 @@
-import { Injectable, PipeTransform } from "@nestjs/common";
+import { Injectable, type PipeTransform } from "@nestjs/common";
 
 @Injectable()
 export class ParseUniqueIdPipe implements PipeTransform {

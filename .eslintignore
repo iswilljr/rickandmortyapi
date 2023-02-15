@@ -44,3 +44,4 @@ coverage
 build
 api
 tailwind.css
+remix.env.d.ts
