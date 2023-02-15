@@ -1,4 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
+import { sortById } from "../../common/helpers/sort-by-id";
 import type { Location } from "../../location/entities/location.entity";
 import type { LocationResponse } from "../../common/interfaces/location.interface";
 
@@ -10,7 +11,8 @@ export function transformLocation(location: Location): LocationResponse {
     name,
     type,
     dimension,
-    residents: residents?.map((resident) => getUrl({ endpoint: "character", id: resident.id })),
+    residents: residents?.map((resident) => getUrl({ endpoint: "character", id: resident.id })).sort(sortById),
+
     url: getUrl({ endpoint: "location", id: location.id }),
     created,
   };

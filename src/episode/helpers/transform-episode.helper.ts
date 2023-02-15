@@ -1,4 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
+import { sortById } from "../../common/helpers/sort-by-id";
 import type { Episode } from "episode/entities/episode.entity";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
 
@@ -11,7 +12,7 @@ export function transformEpisode(episode: Episode): EpisodeResponse {
     name,
     air_date,
     episode: nEpisode,
-    characters: characters?.map((character) => getUrl({ endpoint: "character", id: character.id })),
+    characters: characters?.map((character) => getUrl({ endpoint: "character", id: character.id })).sort(sortById),
     url: getUrl({ endpoint: "episode", id: episode.id }),
     created,
   };

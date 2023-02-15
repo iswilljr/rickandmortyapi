@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CharacterService } from "../character/character.service";
 import { EpisodeService } from "../episode/episode.service";
 import { LocationService } from "../location/location.service";
+import { getIdFromURL } from "../common/helpers/get-id-from-url";
 import type { CharacterResponse, EpisodeResponse, LocationResponse, PaginationResponse } from "../common/interfaces";
 import type { CreateCharacterDto } from "./interfaces/create-character.inteface";
 
@@ -45,9 +46,9 @@ export class SeedService {
         return {
           ...character,
           image: image.split("/").pop() as string,
-          episode: episode.map(this.getIdFromURL),
-          originId: this.getIdFromURL(origin.url),
-          locationId: this.getIdFromURL(location.url),
+          episode: episode.map(getIdFromURL),
+          originId: getIdFromURL(origin.url),
+          locationId: getIdFromURL(location.url),
         };
       }
     );
@@ -71,9 +72,5 @@ export class SeedService {
 
   private getPath(url: string): string {
     return `${this.baseURL}${url.replace(this.baseURL, "")}`;
-  }
-
-  private getIdFromURL(url: string): number {
-    return Number(url.split("/").pop());
   }
 }

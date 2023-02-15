@@ -9,7 +9,7 @@ interface GetUrlOptions {
 
 const removeLastSlash = (str: string): string => str.replace(/\/$/, "");
 
-export const getUrl = ({ endpoint, id, page, query }: GetUrlOptions): string => {
+export function getUrl({ endpoint, id, page, query }: GetUrlOptions): string {
   const url = new URL(removeLastSlash(`/api/${endpoint}/${id ?? ""}`), removeLastSlash(process.env.BASE_URL as string));
 
   const searchParams = Object.assign({}, query ?? {}, { page });
@@ -20,4 +20,4 @@ export const getUrl = ({ endpoint, id, page, query }: GetUrlOptions): string => 
   }
 
   return url.toString();
-};
+}

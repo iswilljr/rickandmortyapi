@@ -1,4 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
+import { sortById } from "../../common/helpers/sort-by-id";
 import type { Character } from "../../character/entities/character.entity";
 import type { CharacterResponse } from "../../common/interfaces/character.interface";
 
@@ -21,7 +22,7 @@ export function transformCharacter(character: Character): CharacterResponse {
       url: origin ? getUrl({ endpoint: "location", id: origin.id }) : "",
     },
     image: getUrl({ endpoint: "character/avatar", id: image }),
-    episode: episode?.map?.((episode) => getUrl({ endpoint: "episode", id: episode.id })),
+    episode: episode?.map?.((episode) => getUrl({ endpoint: "episode", id: episode.id })).sort(sortById),
     url: getUrl({ endpoint: "character", id: character.id }),
     created,
   };
