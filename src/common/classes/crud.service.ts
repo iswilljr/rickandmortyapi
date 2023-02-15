@@ -33,9 +33,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     }
   }
 
-  async findAll(
-    findAllOptions: CRUDServiceFindAllOptions<Entity>
-  ): Promise<PaginationResponse<ReturnType<typeof this.options.transformObj>>> {
+  async findAll(findAllOptions: CRUDServiceFindAllOptions<Entity>): Promise<PaginationResponse<Response>> {
     const {
       query: { page = 1, ...filter },
       options,
@@ -77,10 +75,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     throw new NotFoundException("Page not found");
   }
 
-  async findOneOrMany(
-    id: number[],
-    options?: Omit<FindOneOptions<Entity>, "where">
-  ): Promise<ReturnType<typeof this.options.transformObj> | Array<ReturnType<typeof this.options.transformObj>>> {
+  async findOneOrMany(id: number[], options?: Omit<FindOneOptions<Entity>, "where">): Promise<Response | Response[]> {
     try {
       const obj = await (id.length > 1
         ? this.repository.find({ ...options, where: { id: In(id) } as any, order: { id: { direction: "ASC" } } as any })
