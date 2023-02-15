@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Episode } from "../../episode/entities/episode.entity";
 import { Location } from "../../location/entities/location.entity";
 
@@ -42,9 +42,4 @@ export class Character {
 
   @Column("timestamp")
   created: string;
-
-  @BeforeInsert()
-  beforeInsert(): void {
-    this.created = new Date().toISOString();
-  }
 }
