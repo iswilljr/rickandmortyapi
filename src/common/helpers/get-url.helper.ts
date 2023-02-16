@@ -10,7 +10,8 @@ interface GetUrlOptions {
 const removeLastSlash = (str: string): string => str.replace(/\/$/, "");
 
 export function getUrl({ endpoint, id, page, query }: GetUrlOptions): string {
-  const url = new URL(removeLastSlash(`/api/${endpoint}/${id ?? ""}`), removeLastSlash(process.env.BASE_URL as string));
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const url = new URL(`${removeLastSlash(process.env.BASE_URL!)}/${removeLastSlash(`${endpoint}/${id ?? ""}`)}`);
 
   const searchParams = Object.assign({}, query ?? {}, { page });
 
