@@ -1,6 +1,6 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
 import { getUrl } from "../../common/helpers/get-url.helper";
-import type { CRUDServiceFindAllOptions, CRUDServiceOptions } from ".,/../common/interfaces/crud.interface";
+import type { CRUDServiceFindAllOptions, CRUDServiceOptions } from "common/interfaces/crud.interface";
 import {
   type DeepPartial,
   type FindOneOptions,

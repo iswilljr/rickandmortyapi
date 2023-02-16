@@ -4,9 +4,8 @@ import { CRUDService } from "../common/classes/crud.service";
 import { Episode } from "./entities/episode.entity";
 import { transformEpisode } from "./helpers/transform-episode.helper";
 import { type FindManyOptions, Repository } from "typeorm";
-import type { EpisodeResponse } from "common/interfaces/episode.interface";
 import type { EpisodeQueryDto } from "./dto/episode-query.dto";
-import type { PaginationResponse } from "../common/interfaces";
+import type { PaginationResponse, EpisodeResponse } from "common/interfaces";
 
 @Injectable()
 export class EpisodeService {
