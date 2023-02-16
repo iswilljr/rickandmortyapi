@@ -18,7 +18,6 @@ import { AppService } from "./app.service";
       serveRoot: "/character/avatar",
     }),
     ConfigModule.forRoot({
-      envFilePath: [".env.local"],
       validationSchema,
     }),
     TypeOrmModule.forRoot({
