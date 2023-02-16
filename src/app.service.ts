@@ -7,7 +7,7 @@ export class AppService {
   baseURL: string;
 
   constructor(configService: ConfigService) {
-    this.baseURL = new URL(configService.get("BASE_URL") as string).toString();
+    this.baseURL = new URL(configService.get("BASE_URL")!).toString();
   }
 
   root(): Partial<Record<Endpoints, string>> {
