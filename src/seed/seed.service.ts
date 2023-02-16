@@ -16,7 +16,7 @@ export class SeedService {
     private readonly locationService: LocationService
   ) {}
 
-  async seed(): Promise<string> {
+  async seed(): Promise<Record<string, string>> {
     await this.preSeed();
 
     await Promise.all([this.seedEpisodes(), this.seedLocations()]);
@@ -24,7 +24,7 @@ export class SeedService {
     // depends on episodes and locations
     await this.seedCharacters();
 
-    return "SEED EXECUTED";
+    return { message: "OK" };
   }
 
   private async seedEpisodes(): Promise<void> {
@@ -63,14 +63,18 @@ export class SeedService {
     ]);
   }
 
-  private async getData<T>(url: string): Promise<T[]> {
-    const res = await fetch(this.getPath(url));
-    const data: PaginationResponse<T> = await res.json();
+  private async getData<T>(path: string): Promise<T[]> {
+    const baseURL = `${this.baseURL}${path}`;
 
-    return data.results.concat(data.info.next ? await this.getData<T>(data.info.next) : []);
-  }
+    const countRes = await fetch(baseURL);
+    const countData: PaginationResponse<T> = await countRes.json();
+    const { count } = countData.info;
 
-  private getPath(url: string): string {
-    return `${this.baseURL}${url.replace(this.baseURL, "")}`;
+    const ids = Array.from({ length: count }, (_, i) => i + 1);
+
+    const res = await fetch(`${baseURL}/${ids.join(",")}`);
+    const data: T[] = await res.json();
+
+    return data;
   }
 }
