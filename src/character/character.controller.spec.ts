@@ -1,17 +1,21 @@
 import { Test, type TestingModule } from "@nestjs/testing";
+import { AppModule } from "../app.module";
 import { CharacterController } from "./character.controller";
-import { CharacterService } from "./character.service";
 
 describe("TddController", () => {
+  let module: TestingModule;
   let controller: CharacterController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CharacterController],
-      providers: [CharacterService],
+  beforeAll(async () => {
+    module = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
     controller = module.get<CharacterController>(CharacterController);
+  });
+
+  afterAll(async () => {
+    await module.close();
   });
 
   it("should be defined", () => {
