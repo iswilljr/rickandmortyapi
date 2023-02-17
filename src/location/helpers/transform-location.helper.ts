@@ -1,5 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
-import { sortById } from "../../common/helpers/sort-by-id";
+import { sortById } from "../../common/helpers/sort-by-id.helper";
 import type { Location } from "../../location/entities/location.entity";
 import type { LocationResponse } from "../../common/interfaces/location.interface";
 

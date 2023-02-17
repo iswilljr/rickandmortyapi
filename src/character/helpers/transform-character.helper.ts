@@ -1,5 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
-import { sortById } from "../../common/helpers/sort-by-id";
+import { sortById } from "../../common/helpers/sort-by-id.helper";
 import type { Character } from "../../character/entities/character.entity";
 import type { CharacterResponse } from "../../common/interfaces/character.interface";
 

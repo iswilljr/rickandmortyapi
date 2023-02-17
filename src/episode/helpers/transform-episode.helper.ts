@@ -1,5 +1,5 @@
 import { getUrl } from "../../common/helpers/get-url.helper";
-import { sortById } from "../../common/helpers/sort-by-id";
+import { sortById } from "../../common/helpers/sort-by-id.helper";
 import type { Episode } from "episode/entities/episode.entity";
 import type { EpisodeResponse } from "common/interfaces/episode.interface";
 
