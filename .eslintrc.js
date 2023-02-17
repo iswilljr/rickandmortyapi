@@ -14,12 +14,8 @@ module.exports = {
     {
       files: "site/**/*",
       settings: { react: { version: "18" } },
-      extends: [
-        "@remix-run/eslint-config/node",
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:react-hooks/recommended",
-      ],
+      extends: ["plugin:react/recommended", "plugin:react/jsx-runtime", "plugin:react-hooks/recommended"],
+      plugins: ["node"],
       rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
       },
