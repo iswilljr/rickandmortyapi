@@ -18,6 +18,7 @@ import { AppService } from "./app.service";
       serveRoot: "/character/avatar",
     }),
     ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
       validationSchema,
     }),
     TypeOrmModule.forRoot({
@@ -33,7 +34,8 @@ import { AppService } from "./app.service";
     CharacterModule,
     EpisodeModule,
     LocationModule,
-  ].concat(process.env.NODE_ENV === "development" ? [SeedModule] : []),
+    SeedModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
