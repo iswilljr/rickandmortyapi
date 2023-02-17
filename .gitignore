@@ -46,3 +46,6 @@ build
 api
 tailwind.css
 .vercel
+test-results/
+playwright-report/
+playwright/.cache/
