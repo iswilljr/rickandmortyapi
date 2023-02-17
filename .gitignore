@@ -45,3 +45,4 @@ coverage
 build
 api
 tailwind.css
+.vercel
