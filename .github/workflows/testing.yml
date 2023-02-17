@@ -9,11 +9,12 @@ jobs:
   test:
     name: Rick and Morty API Unit and E2E Testing
     runs-on: ubuntu-latest
+    container: node:18
     services:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres
+        image: postgres:14.3
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
@@ -32,10 +33,6 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 7
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Unit Testing
