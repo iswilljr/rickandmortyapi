@@ -2,13 +2,20 @@ import { Injectable } from "@nestjs/common";
 import { CharacterService } from "../character/character.service";
 import { EpisodeService } from "../episode/episode.service";
 import { LocationService } from "../location/location.service";
-import { getIdFromURL } from "../common/helpers/get-id-from-url";
+import { getIdFromURL } from "../common/helpers/get-id-from-url.helper";
+import { existsSync, promises as fs } from "fs";
+import * as path from "path";
+import * as os from "os";
 import type { CharacterResponse, EpisodeResponse, LocationResponse, PaginationResponse } from "../common/interfaces";
-import type { CreateCharacterDto } from "./interfaces/create-character.inteface";
+import type { DeepPartial } from "typeorm";
+import type { Episode } from "episode/entities/episode.entity";
+import type { Location } from "location/entities/location.entity";
 
 @Injectable()
 export class SeedService {
   private readonly baseURL = "https://rickandmortyapi.com/api";
+  private locations: Record<number, DeepPartial<Location>>;
+  private episodes: Record<number, DeepPartial<Episode>>;
 
   constructor(
     private readonly characterService: CharacterService,
@@ -28,31 +35,39 @@ export class SeedService {
   }
 
   private async seedEpisodes(): Promise<void> {
-    const episodes = await this.getData<EpisodeResponse>("/episode");
+    const episodes = await this.cache("episodes", () => this.getData<EpisodeResponse>("/episode"));
     const episodesToInsert = episodes.map(({ characters, ...episode }) => episode);
-    await this.episodeService.crud.create(episodesToInsert);
+
+    const dbEpisodes = (await this.episodeService.crud.create(episodesToInsert)) as Array<DeepPartial<Episode>>;
+
+    this.episodes = Object.fromEntries(dbEpisodes.map((episode) => [episode.id, episode]));
   }
 
   private async seedLocations(): Promise<void> {
-    const locations = await this.getData<LocationResponse>("/location");
+    const locations = await this.cache("locations", () => this.getData<LocationResponse>("/location"));
     const locationsToInsert = locations.map(({ residents, ...location }) => location);
-    await this.locationService.crud.create(locationsToInsert);
+
+    const dbLocations = (await this.locationService.crud.create(locationsToInsert)) as Array<DeepPartial<Location>>;
+
+    this.locations = Object.fromEntries(dbLocations.map((location) => [location.id, location]));
   }
 
   private async seedCharacters(): Promise<void> {
-    const characters = await this.getData<CharacterResponse>("/character");
-    const charactersToInsert: CreateCharacterDto[] = characters.map(
-      ({ location, origin, episode, image, ...character }) => {
-        return {
-          ...character,
-          image: image.split("/").pop() as string,
-          episode: episode.map(getIdFromURL),
-          originId: getIdFromURL(origin.url),
-          locationId: getIdFromURL(location.url),
-        };
-      }
-    );
-    await this.characterService.createCharacters(charactersToInsert);
+    const characters = await this.cache("characters", () => this.getData<CharacterResponse>("/character"));
+    const charactersToInsert = characters.map(({ location, origin, episode, image, ...character }) => {
+      const originId = getIdFromURL(origin.url);
+      const locationId = getIdFromURL(location.url);
+
+      return {
+        ...character,
+        image: image.split("/").pop() as string,
+        episode: episode.map((episode) => this.episodes[getIdFromURL(episode)]),
+        origin: originId ? this.locations[originId] : undefined,
+        location: locationId ? this.locations[locationId] : undefined,
+      };
+    });
+
+    await this.characterService.crud.create(charactersToInsert);
   }
 
   private async preSeed(): Promise<void> {
@@ -76,5 +91,27 @@ export class SeedService {
     const data: T[] = await res.json();
 
     return data;
+  }
+
+  private async cache<T>(key: string, fn: () => Promise<T>): Promise<T> {
+    const dirname = path.resolve(os.tmpdir(), "rickandmortyapi");
+    const filePath = path.resolve(dirname, `${key}.json`);
+
+    const existsFile = existsSync(filePath);
+
+    if (existsFile) {
+      const content = await fs.readFile(filePath, "utf-8");
+      const json = JSON.parse(content);
+
+      return json;
+    }
+
+    const existsDirname = existsSync(dirname);
+    if (!existsDirname) await fs.mkdir(dirname, { recursive: true });
+
+    const result = await fn();
+    await fs.writeFile(filePath, JSON.stringify(result), "utf-8");
+
+    return result;
   }
 }

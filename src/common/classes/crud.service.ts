@@ -1,5 +1,5 @@
 import { BadRequestException, Logger, NotFoundException } from "@nestjs/common";
-import { getUrl } from "../../common/helpers/get-url.helper";
+import { getUrl } from "../helpers/get-url.helper";
 import type { CRUDServiceFindAllOptions, CRUDServiceOptions } from "common/interfaces/crud.interface";
 import {
   type DeepPartial,
@@ -23,14 +23,18 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
     this.logger = new Logger(options.loggerName);
   }
 
-  async create(entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>): Promise<void> {
+  async create(
+    entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>
+  ): Promise<DeepPartial<Entity> | Array<DeepPartial<Entity>>> {
     try {
       const obj = this.repository.create(entityLike as DeepPartial<Entity>);
 
-      await this.repository.save(obj);
+      return await this.repository.save(obj);
     } catch (error) {
       this.handlerError(error);
     }
+
+    return [];
   }
 
   async findAll(findAllOptions: CRUDServiceFindAllOptions<Entity>): Promise<PaginationResponse<Response>> {
