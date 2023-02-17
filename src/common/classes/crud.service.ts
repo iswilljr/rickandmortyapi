@@ -72,7 +72,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
       this.handlerError(error);
     }
 
-    throw new NotFoundException("Page not found");
+    throw new NotFoundException("Page Not Found");
   }
 
   async findOneOrMany(id: number[], options?: Omit<FindOneOptions<Entity>, "where">): Promise<Response | Response[]> {
@@ -88,7 +88,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
       this.handlerError(error);
     }
 
-    throw new NotFoundException(`Not found`);
+    throw new NotFoundException("Not Found");
   }
 
   async removeAll(): Promise<void> {
