@@ -18,7 +18,6 @@ import { AppService } from "./app.service";
       serveRoot: "/character/avatar",
     }),
     ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
       validationSchema,
     }),
     TypeOrmModule.forRoot({
