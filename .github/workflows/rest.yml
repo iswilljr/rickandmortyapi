@@ -2,9 +2,12 @@ name: Rick and Morty API Unit and E2E Testing
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - "site/**"
   pull_request:
     branches: [master]
-
+    paths-ignore:
+      - "site/**"
 jobs:
   test:
     runs-on: ubuntu-latest

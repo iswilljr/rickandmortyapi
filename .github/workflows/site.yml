@@ -6,7 +6,8 @@ on:
       - "site/**"
   pull_request:
     branches: [master]
-
+    paths:
+      - "site/**"
 jobs:
   test:
     defaults:
