@@ -2,6 +2,9 @@
 
 # The Rick and Morty API
 
+[![Rick and Morty API Unit and E2E Testing](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/rest.yml/badge.svg)](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/rest.yml)
+[![Rick and Morty API Site E2E Testing](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/site.yml/badge.svg)](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/site.yml)
+
 A backend clone project of the [The Rick and Morty API](https://rickandmortyapi.com), star the project [here](https://github.com/afuh/rick-and-morty-api).
 
 [The Rick and Morty API](https://therickandmortyapi.vercel.app) is a RESTful API based on the television show [Rick and Morty](https://www.adultswim.com/videos/rick-and-morty). The Rick and Morty API is filled with canonical information as seen on the TV show.
