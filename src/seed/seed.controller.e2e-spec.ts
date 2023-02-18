@@ -35,4 +35,16 @@ describe("SeedController (e2e)", () => {
 
     await request(app.getHttpServer()).post("/seed").expect("Content-Type", /json/).expect(201, expected);
   });
+
+  it("should throw not found error", async () => {
+    process.env.NODE_ENV = "production";
+
+    const expected = {
+      statusCode: 404,
+      message: "Cannot POST /seed",
+      error: "Not Found",
+    };
+
+    await request(app.getHttpServer()).post("/seed").expect("Content-Type", /json/).expect(404, expected);
+  });
 });
