@@ -2,6 +2,7 @@ import { Test, type TestingModule } from "@nestjs/testing";
 import { CharacterService } from "./character.service";
 import { AppModule } from "../app.module";
 import { getUrl } from "../common/helpers/get-url.helper";
+import { BadRequestException, NotFoundException } from "@nestjs/common";
 import type { CharacterResponse } from "common/interfaces";
 
 const data = [
@@ -98,5 +99,16 @@ describe("CharacterService", () => {
 
     expect(response.info).toEqual({ count, pages: Math.ceil(count / MAX_PAGINATION_RESULTS), prev: null, next: null });
     expect(response.results.length).toBe(count);
+  });
+
+  it("should throw error BadRequest and NotFound exceptions", async () => {
+    await Promise.all([
+      expect(service.crud.create({})).rejects.toBeInstanceOf(BadRequestException),
+      expect(service.crud.findAll({ query: { id: "5000" } })).rejects.toBeInstanceOf(BadRequestException),
+      expect(service.crud.findOneOrMany([{}] as any)).rejects.toBeInstanceOf(BadRequestException),
+
+      expect(service.crud.findAll({ query: { name: "somerandomname" } })).rejects.toBeInstanceOf(NotFoundException),
+      expect(service.crud.findOneOrMany([5000])).rejects.toBeInstanceOf(NotFoundException),
+    ]);
   });
 });

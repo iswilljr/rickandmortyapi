@@ -25,16 +25,14 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
   async create(
     entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>
-  ): Promise<DeepPartial<Entity> | Array<DeepPartial<Entity>>> {
+  ): Promise<DeepPartial<Entity> | Array<DeepPartial<Entity>> | undefined> {
     try {
       const obj = this.repository.create(entityLike as DeepPartial<Entity>);
 
       return await this.repository.save(obj);
     } catch (error) {
-      this.handlerError(error);
+      throw new BadRequestException(error);
     }
-
-    return [];
   }
 
   async findAll(findAllOptions: CRUDServiceFindAllOptions<Entity>): Promise<PaginationResponse<Response>> {
@@ -59,8 +57,8 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
         where,
       });
 
-      const nPages = count / this.MAX_RESULTS;
-      const pages = count % this.MAX_RESULTS === 0 ? nPages : Math.floor(nPages) + 1;
+      const pages = Math.ceil(count / this.MAX_RESULTS);
+
       if (page <= pages) {
         return {
           info: {
@@ -73,7 +71,7 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
         };
       }
     } catch (error) {
-      this.handlerError(error);
+      throw new BadRequestException(error);
     }
 
     throw new NotFoundException("Page Not Found");
@@ -87,9 +85,10 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
       const isObjArray = Array.isArray(obj);
       if (obj && isObjArray && obj.length > 0) return obj.map(this.options.transformObj);
+
       if (obj && !isObjArray) return this.options.transformObj(obj);
     } catch (error) {
-      this.handlerError(error);
+      throw new BadRequestException(error);
     }
 
     throw new NotFoundException("Not Found");
@@ -97,17 +96,6 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
   async removeAll(): Promise<void> {
     const queryBuilder = this.repository.createQueryBuilder();
-
-    try {
-      await queryBuilder.delete().where({}).execute();
-    } catch (error) {
-      this.handlerError(error);
-    }
-  }
-
-  private handlerError(error: any, InstanceError: any = BadRequestException): void {
-    this.logger.error(error);
-
-    throw new InstanceError(error.detail ?? error.message);
+    await queryBuilder.delete().where({}).execute();
   }
 }
