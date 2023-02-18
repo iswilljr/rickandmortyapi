@@ -59,22 +59,20 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
       const pages = Math.ceil(count / this.MAX_RESULTS);
 
-      if (page <= pages) {
-        return {
-          info: {
-            count,
-            pages,
-            next: page < pages ? getUrl({ endpoint: this.options.endpoint, page: page + 1, query: filter }) : null,
-            prev: nPage > 0 ? getUrl({ endpoint: this.options.endpoint, page: page - 1, query: filter }) : null,
-          },
-          results: objs.map(this.options.transformObj),
-        };
-      }
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+      if (page > pages) throw new NotFoundException("Page Not Found");
 
-    throw new NotFoundException("Page Not Found");
+      return {
+        info: {
+          count,
+          pages,
+          next: page < pages ? getUrl({ endpoint: this.options.endpoint, page: page + 1, query: filter }) : null,
+          prev: nPage > 0 ? getUrl({ endpoint: this.options.endpoint, page: page - 1, query: filter }) : null,
+        },
+        results: objs.map(this.options.transformObj),
+      };
+    } catch (error) {
+      throw new NotFoundException("Page Not Found");
+    }
   }
 
   async findOneOrMany(id: number[], options?: Omit<FindOneOptions<Entity>, "where">): Promise<Response | Response[]> {
@@ -84,14 +82,15 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
         : this.repository.findOne({ ...options, where: { id: id[0] } as any }));
 
       const isObjArray = Array.isArray(obj);
-      if (obj && isObjArray && obj.length > 0) return obj.map(this.options.transformObj);
 
-      if (obj && !isObjArray) return this.options.transformObj(obj);
+      if (!obj || (isObjArray && obj.length < 1)) throw new NotFoundException("Not Found");
+
+      if (isObjArray) return obj.map(this.options.transformObj);
+
+      return this.options.transformObj(obj);
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new NotFoundException("Not Found");
     }
-
-    throw new NotFoundException("Not Found");
   }
 
   async removeAll(): Promise<void> {
