@@ -1,0 +1,31 @@
+name: Rick and Morty API Site E2E Testing
+on:
+  push:
+    branches: [master]
+    paths:
+      - "site/**"
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    defaults:
+      run:
+        working-directory: site
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Site E2E Testing
+        run: pnpm exec playwright test
