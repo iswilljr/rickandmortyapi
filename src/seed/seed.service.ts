@@ -78,7 +78,7 @@ export class SeedService {
     ]);
   }
 
-  private async getData<T>(path: string): Promise<T[]> {
+  async getData<T>(path: string): Promise<T[]> {
     const baseURL = `${this.baseURL}${path}`;
 
     const countRes = await fetch(baseURL);
@@ -93,7 +93,7 @@ export class SeedService {
     return data;
   }
 
-  private async cache<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  async cache<T>(key: string, fn: () => Promise<T>): Promise<T> {
     const dirname = path.resolve(os.tmpdir(), "rickandmortyapi");
     const filePath = path.resolve(dirname, `${key}.json`);
 
