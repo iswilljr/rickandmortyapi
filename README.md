@@ -8,29 +8,44 @@ A backend clone project of the [The Rick and Morty API](https://rickandmortyapi.
 
 ## Getting Started
 
-Install dependencies with yarn
-
-```bash
-yarn
-```
-
-Start local postgres database
-
-```bash
-docker-compose --env-file .env.local up -d
-```
-
-Seed the database
-
-```bash
-yarn dev
-curl --request POST --url http://localhost:4000/api/seed
-```
-
-Test the REST api
-
-```bash
-yarn test
-```
-
 **Check out the [documentation](https://therickandmortyapi.vercel.app/docs/introduction) to get started**
+
+#### Install dependencies with pnpm
+
+```bash
+pnpm install
+```
+
+#### Start local postgres database
+
+```bash
+docker-compose up -d
+```
+
+#### Seed the database
+
+```bash
+# Start dev server
+pnpm dev
+
+# On another terminal
+curl --request POST --url http://localhost:4000/seed
+```
+
+#### Testing
+
+```bash
+# Controllers And Services
+pnpm test
+
+# REST API
+pnpm test:e2e
+
+# Site E2E Testing
+cd site
+pnpm playwright test
+```
+
+## Website
+
+You can check the code of the website [here](./site)
