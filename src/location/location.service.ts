@@ -3,21 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CRUDService } from "../common/classes/crud.service";
 import { Location } from "./entities/location.entity";
 import { transformLocation } from "./helpers/transform-location.helper";
-import { type FindManyOptions, Repository } from "typeorm";
+import { locationOptions } from "./helpers/relations.helper";
+import { Repository } from "typeorm";
 import type { LocationResponse } from "../common/interfaces/location.interface";
 import type { LocationQueryDto } from "./dto/location-query.dto";
 import type { PaginationResponse } from "../common/interfaces";
 
 @Injectable()
 export class LocationService {
-  private readonly locationOptions: FindManyOptions<Location> = {
-    relations: {
-      residents: true,
-    },
-    select: {
-      residents: { id: true, uuid: true },
-    },
-  };
+  private readonly locationOptions = locationOptions;
 
   readonly crud: CRUDService<Location, LocationResponse>;
 
