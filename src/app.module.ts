@@ -1,15 +1,20 @@
 import { resolve } from "path";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { GraphQLModule } from "@nestjs/graphql";
+import { ApolloDriver, type ApolloDriverConfig } from "@nestjs/apollo";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { CharacterModule } from "./character/character.module";
 import { EpisodeModule } from "./episode/episode.module";
 import { LocationModule } from "./location/location.module";
+import { GraphqlModule } from "./graphql/graphql.module";
+import { typeDefs } from "./graphql/schema/typeDefs";
 import { SeedModule } from "./seed/seed.module";
 import { validationSchema } from "./config/env.config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import depthLimit from "graphql-depth-limit";
 
 @Module({
   imports: [
@@ -30,10 +35,20 @@ import { AppService } from "./app.service";
       autoLoadEntities: true,
       synchronize: true,
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      typeDefs,
+      cache: "bounded",
+      driver: ApolloDriver,
+      path: "/graphql",
+      playground: true,
+      validationRules: [depthLimit(4)],
+      introspection: true,
+    }),
     CharacterModule,
     EpisodeModule,
     LocationModule,
     SeedModule,
+    GraphqlModule,
   ],
   controllers: [AppController],
   providers: [AppService],
