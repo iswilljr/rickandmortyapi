@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Test, type TestingModule } from "@nestjs/testing";
-import * as request from "supertest";
+import request from "supertest";
 import { AppModule } from "../app.module";
 import { getUrl } from "../common/helpers/get-url.helper";
 import { SeedService } from "../seed/seed.service";

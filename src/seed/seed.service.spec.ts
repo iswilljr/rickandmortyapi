@@ -2,8 +2,8 @@ import { Test, type TestingModule } from "@nestjs/testing";
 import { SeedService } from "./seed.service";
 import { AppModule } from "../app.module";
 import { existsSync, promises as fs } from "fs";
-import * as path from "path";
-import * as os from "os";
+import path from "path";
+import os from "os";
 import type { CharacterResponse } from "../common/interfaces";
 
 describe("SeedService", () => {
