@@ -57,6 +57,12 @@ describe("GraphqlResolver", () => {
     expect(characters.length).toBe(3);
   });
 
+  it("should get an empty characters array", async () => {
+    const characters = await resolver.charactersByIds([]);
+
+    expect(characters.length).toBe(0);
+  });
+
   it("should get one character by ids", async () => {
     const character = await resolver.charactersByIds([1]);
 
@@ -85,6 +91,12 @@ describe("GraphqlResolver", () => {
     expect(locations.length).toBe(3);
   });
 
+  it("should get an empty locations array", async () => {
+    const locations = await resolver.locationsByIds([]);
+
+    expect(locations.length).toBe(0);
+  });
+
   it("should get one location by ids", async () => {
     const location = await resolver.locationsByIds([1]);
 
@@ -111,6 +123,12 @@ describe("GraphqlResolver", () => {
 
     expect(episodes).not.toBeNull();
     expect(episodes.length).toBe(3);
+  });
+
+  it("should get an empty episodes array", async () => {
+    const episodes = await resolver.episodesByIds([]);
+
+    expect(episodes.length).toBe(0);
   });
 
   it("should get one episode by ids", async () => {
