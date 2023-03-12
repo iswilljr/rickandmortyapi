@@ -18,8 +18,7 @@
     "test:watch": "jest --runInBand --watch",
     "test:cov": "jest --runInBand --coverage --testRegex \".*spec.ts$\"",
     "test:e2e": "jest --runInBand --config jest-e2e.config.ts",
-    "typecheck": "tsc --noEmit",
-    "g": "git diff"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/server": "4.5.0",
