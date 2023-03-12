@@ -62,18 +62,17 @@ describe("GraphQLResolver (e2e)", () => {
   };
 
   const expectError = (errors: any, message = "Not Found") => {
-    const expectedError = {
-      message,
-      extensions: {
-        code: "404",
-        response: { statusCode: 404, message, error: "Not Found" },
-      },
+    const expectedExtensionError = {
+      code: "INTERNAL_SERVER_ERROR",
+      status: 404,
+      originalError: { statusCode: 404, message, error: "Not Found" },
     };
 
     expect(Array.isArray(errors)).toBeTruthy();
 
     errors.forEach((error) => {
-      expect(error).toEqual(expectedError);
+      expect(error.message).toBe(message);
+      expect(error.extensions).toEqual(expectedExtensionError);
     });
   };
 
