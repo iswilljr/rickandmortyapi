@@ -63,7 +63,6 @@ getRandomGroupOfCharacters()
     fs.writeFileSync(DATA_PATH, `${JSON.stringify(res, null, 2)}\n`, "utf-8");
   })
   .catch((err) => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     const info = `GET ${err.url} - ${err.status} ${err.statusText}`;
     const message = err.data.replace(/\n+/g, " ").replace(/\s+$/, "");
 
