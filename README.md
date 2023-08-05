@@ -3,6 +3,7 @@
 # The Rick and Morty API
 
 [![Rick and Morty API Unit and E2E Testing](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/rest.yml/badge.svg)](https://github.com/iswilljr/rick-and-morty-api/actions/workflows/rest.yml)
+[![Rick and Morty Site E2E Testing](https://github.com/iswilljr/rick-and-morty-site-qwik/actions/workflows/test.yml/badge.svg)](https://github.com/iswilljr/rick-and-morty-site-qwik/actions/workflows/test.yml)
 
 A backend clone project of the [The Rick and Morty API](https://rickandmortyapi.com), star the project [here](https://github.com/afuh/rick-and-morty-api).
 
