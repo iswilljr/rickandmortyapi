@@ -20,7 +20,7 @@ export class SeedService {
   constructor(
     private readonly characterService: CharacterService,
     private readonly episodeService: EpisodeService,
-    private readonly locationService: LocationService
+    private readonly locationService: LocationService,
   ) {}
 
   async seed(): Promise<Record<string, string>> {

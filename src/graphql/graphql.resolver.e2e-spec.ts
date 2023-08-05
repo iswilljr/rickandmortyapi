@@ -80,7 +80,7 @@ describe("GraphQLResolver (e2e)", () => {
 
   it("should get all characters", async () => {
     const { characters } = await get(
-      'characters(page: 2, filter: { name: "Rick" }) { info { count pages prev next } results { id name } }'
+      'characters(page: 2, filter: { name: "Rick" }) { info { count pages prev next } results { id name } }',
     );
 
     const fullOfRicks = characters.results.every((character) => character.name.toLowerCase().includes("rick"));
@@ -93,7 +93,7 @@ describe("GraphQLResolver (e2e)", () => {
 
   it("should get one character", async () => {
     const { character } = await get(
-      "character(id: 1) { id name status species type gender location { id } origin { id } image episode { id } created }"
+      "character(id: 1) { id name status species type gender location { id } origin { id } image episode { id } created }",
     );
 
     expect(character.image).toBe(getUrl({ endpoint: "character/avatar", id: "1.jpeg" }));
@@ -134,7 +134,7 @@ describe("GraphQLResolver (e2e)", () => {
 
   it("should get all locations", async () => {
     const { locations } = await get(
-      'locations(filter: { name: "earth" }) { info { count pages prev next } results { id name } }'
+      'locations(filter: { name: "earth" }) { info { count pages prev next } results { id name } }',
     );
 
     const fullOfEarth = locations.results.every((location) => location.name.toLowerCase().includes("earth"));
@@ -185,7 +185,7 @@ describe("GraphQLResolver (e2e)", () => {
 
   it("should get all episodes", async () => {
     const { episodes } = await get(
-      'episodes(filter: { episode: "S01" }) { info { count pages prev next } results { id episode } }'
+      'episodes(filter: { episode: "S01" }) { info { count pages prev next } results { id episode } }',
     );
 
     const fullOfSeasonOne = episodes.results.every((obj) => obj.episode.toLowerCase().includes("s01"));

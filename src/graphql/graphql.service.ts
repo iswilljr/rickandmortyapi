@@ -25,7 +25,7 @@ export class GraphqlService {
   constructor(
     private readonly characterService: CharacterService,
     private readonly episodeService: EpisodeService,
-    private readonly locationService: LocationService
+    private readonly locationService: LocationService,
   ) {}
 
   findOneOrManyCharacters(id: number | number[]): Promise<CharacterResponse | CharacterResponse[]> {

@@ -19,6 +19,12 @@ A backend clone project of the [The Rick and Morty API](https://rickandmortyapi.
 pnpm install
 ```
 
+#### Generate Env Variables
+
+```bash
+cp -r .env.template .env
+```
+
 #### Start local postgres database
 
 ```bash

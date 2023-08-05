@@ -18,13 +18,13 @@ export class CRUDService<Entity extends ObjectLiteral, Response> {
 
   constructor(
     private readonly repository: Repository<Entity>,
-    private readonly options: CRUDServiceOptions<Entity, Response>
+    private readonly options: CRUDServiceOptions<Entity, Response>,
   ) {
     this.logger = new Logger(options.loggerName);
   }
 
   async create(
-    entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>
+    entityLike: DeepPartial<Entity> | Array<DeepPartial<Entity>>,
   ): Promise<DeepPartial<Entity> | Array<DeepPartial<Entity>> | undefined> {
     try {
       const obj = this.repository.create(entityLike as DeepPartial<Entity>);

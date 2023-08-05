@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
       transformOptions: {
         enableImplicitConversion: true,
       },
-    })
+    }),
   );
 
   await app.listen(+(process.env.PORT as string) || 4000);
