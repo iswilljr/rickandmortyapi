@@ -27,6 +27,7 @@ import depthLimit from "graphql-depth-limit";
     }),
     TypeOrmModule.forRoot({
       type: "postgres",
+      ssl: process.env.NODE_ENV === "production",
       database: process.env.POSTGRES_DB,
       host: process.env.POSTGRES_HOST,
       password: process.env.POSTGRES_PASSWORD,
